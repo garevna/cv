@@ -20,7 +20,14 @@ const sourceData = ref(pineappleDescription)
   <a href="https://garevna.github.io/pineapple-lands-editor" target="_blank" v-if="isActive">
     <button class="demo">
       Demo version
-      <img src="/src/assets/open-in-new.svg" width="24" height="24" alt="Open demo version" />
+      <img
+        src="/src/assets/open-in-new.svg"
+        width="24"
+        height="24"
+        alt="Open demo version"
+        class="highlighted-on-hover"
+        style="vertical-align: text-bottom"
+      />
     </button>
   </a>
 </template>

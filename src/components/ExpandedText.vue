@@ -64,9 +64,13 @@ watch(props, async (newVal, oldVal) => {
 
 <template>
   <div class="container">
-    <div v-if="isActive" class="grey">Role: {{ props.role }}</div>
+    <div v-if="isActive" class="role">
+      Role: <span>{{ props.role }}</span>
+    </div>
 
-    <div v-if="isActive" class="stack"><b>Stack: </b>{{ props.stack }}</div>
+    <div v-if="isActive" class="stack">
+      <b>Stack: </b><span class="stack-items">{{ props.stack }}</span>
+    </div>
 
     <p v-for="(line, index) of lines" :key="index">
       <span v-if="line.length">{{ line }}</span>
@@ -81,13 +85,21 @@ watch(props, async (newVal, oldVal) => {
 .container > p {
   margin-bottom: 8px;
   font-size: 14px;
+  text-indent: 24px;
+  text-align: justify;
 }
-.grey {
+.role {
   text-align: right;
   color: var(--vt-c-black-mute);
+  padding-bottom: 12px;
 }
 
 .stack {
+  text-align: justify;
+  padding-bottom: 16px;
+}
+
+.stack-items {
   color: var(--vt-c-green-dark);
   margin: 16px 0;
 }

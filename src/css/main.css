@@ -113,7 +113,7 @@ h3 {
 
 @media (hover: hover) {
   a:hover {
-    background-color: #fafafa;
+    background-color: transparent;
   }
 }
 
@@ -161,14 +161,6 @@ h3 {
   }
 }
 
-.open-in-new {
-  color: #075;
-}
-
-.open-in-new:hover {
-  color: #097;
-}
-
 ::-webkit-scrollbar {
   width: 5px;
   height: 5px;
@@ -181,10 +173,14 @@ h3 {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #074;
+  background: var(--vt-c-green);
   border-radius: 1px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #097;
+  background: var(--vt-c-green-light);
+}
+
+.highlighted-on-hover:hover {
+  filter: brightness(1.5);
 }

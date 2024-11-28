@@ -7,18 +7,7 @@ const props = defineProps({
   isActive: Boolean,
 })
 
-// let target = ref(inject('target-component'))
-// console.log(target.value)
-
-// let sourceData = inject('sourceData')
-// sourceData = ref(portalDescription)
-// console.log('***: ', sourceData)
-
 let isReady = ref(false)
-
-// const sourceData: string[] = reactive<string[]>(portalDescription.split('\n'))
-
-// const sourceData = ref(portalDescription)
 
 const sourceData = ref(portalDescription)
 

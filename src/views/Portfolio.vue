@@ -40,13 +40,17 @@ const buttonCharPineapple = computed(() => (showPineapple.value ? '▲' : '▼')
     <h2>Portfolio</h2>
     <button @click="clickDGtek" class="button">
       <img src="../assets/dgtek.png" alt="DGtek logo" width="64" />
-      <h4 class="green">Portal {{ buttonCharDGtek }}</h4>
+      <h4>
+        Portal <span class="highlighted-on-hover">{{ buttonCharDGtek }}</span>
+      </h4>
     </button>
     <Portal :isActive="showDGtek" />
 
     <button @click="clickPineapple" class="button">
       <img src="../assets/pineapple.png" alt="Pineapple logo" width="52" />
-      <h4>CMS {{ buttonCharPineapple }}</h4>
+      <h4>
+        CMS <span class="highlighted-on-hover">{{ buttonCharPineapple }}</span>
+      </h4>
     </button>
     <Pineapple :isActive="showPineapple" />
 
@@ -55,7 +59,13 @@ const buttonCharPineapple = computed(() => (showPineapple.value ? '▲' : '▼')
       <h4>
         JS-lessons
         <a href="https://garevna.github.io/js-lessons/" target="_blank" rel="noopener">
-          <img src="../assets/open-in-new.svg" width="24" height="24" alt="JS-lessons" />
+          <img
+            src="../assets/open-in-new.svg"
+            width="24"
+            height="24"
+            alt="JS-lessons"
+            class="highlighted-on-hover"
+          />
         </a>
       </h4>
     </button>
@@ -65,7 +75,13 @@ const buttonCharPineapple = computed(() => (showPineapple.value ? '▲' : '▼')
       <h4>
         JS-lessons
         <a href="https://garevna.github.io/js-quiz/" target="_blank" rel="noopener">
-          <img src="../assets/open-in-new.svg" width="24" height="24" alt="JS-lessons" />
+          <img
+            src="../assets/open-in-new.svg"
+            width="24"
+            height="24"
+            alt="JS-quiz"
+            class="highlighted-on-hover"
+          />
         </a>
       </h4>
     </button>
@@ -84,7 +100,6 @@ const buttonCharPineapple = computed(() => (showPineapple.value ? '▲' : '▼')
   font-weight: bold;
   border: none;
   border-radius: 4px;
-  /* background: #ddd; */
   outline: none;
   padding: 4px 8px;
 }
@@ -98,11 +113,7 @@ const buttonCharPineapple = computed(() => (showPineapple.value ? '▲' : '▼')
   text-align: end;
   font-weight: bold;
   font-family: Montserrat, Verdana, Geneva, Tahoma, sans-serif;
-  color: #075;
-}
-
-.button > h4:hover {
-  color: var(--vt-c-green-light);
+  color: var(--vt-c-green);
 }
 
 .button a > img {
