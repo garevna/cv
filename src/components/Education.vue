@@ -21,12 +21,12 @@ defineProps<{
   font-size: 2rem;
   position: relative;
   top: -10px;
-  color: #084;
+  color: var(--vt-c-green);
 }
 
 .greetings h4 {
   font-size: 0.9rem;
-  color: #777;
+  color: var(--vt-c-black-soft);
 }
 
 .greetings h2,

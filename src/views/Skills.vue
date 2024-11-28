@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import SkillsAndJobs from '../components/SkillsAndJobs.vue'
+import Roulette from '../components/Roulette.vue'
+import { skills } from '../configs/roulette-items'
 </script>
 
 <template>
-  <SkillsAndJobs />
+  <Roulette :items="skills" />
 </template>

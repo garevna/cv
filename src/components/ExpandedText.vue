@@ -1,37 +1,37 @@
 <script setup lang="ts">
-// import { portalDescription } from '../configs/portal-description'
-import { reactive, watch } from 'vue'
+import { ref, reactive, watch, onBeforeMount, onMounted, onBeforeUnmount, computed } from 'vue'
+
+const isReady = defineModel()
 
 const props = defineProps({
   isActive: Boolean,
-  sourceData: {
-    type: Array<string>,
-    required: true,
-  },
+  text: String,
   role: {
     type: String,
-    default: 'Senior developer',
+    default: 'Senior JS | Vue.js developer',
   },
   stack: {
     type: String,
-    default: 'Vue.js • Vue router • Vuetify • REST API • web-workers • IndexedDB',
+    default:
+      'Vue.js • Vue router • Vuex • Vuetify • REST API • web-workers • IndexedDB • npm registry',
   },
 })
 
-// const sourceData: string[] = reactive<string[]>(portalDescription.split('\n'))
-
-const lines = reactive<string[]>(new Array(props.sourceData.length).fill(''))
+const data = reactive<string[]>([])
+const lines = reactive<string[]>([])
 
 function show(): void {
   let counter = 0
-  for (let i = 0; i < props.sourceData.length; i++) {
-    const line: string = props.sourceData[i] || '\n'
+  for (let i = 0; i < data.length; i++) {
+    const line: string = data[i] || '\n'
     for (let n = 0; n < line.length; n++) {
       setTimeout(() => {
-        lines[i] = line.slice(0, n + 1)
+        if (props.isActive) lines[i] = line.slice(0, n + 1)
       }, 4 * counter++)
     }
   }
+
+  isReady.value = true
 }
 
 function hide(): Promise<boolean> {
@@ -43,8 +43,19 @@ function hide(): Promise<boolean> {
       }, counter++)
     }
   }
+  isReady.value = false
   return new Promise((resolve) => resolve(true))
 }
+
+onMounted(() => {
+  if (!props.text) {
+    console.warn('props.text is not defined')
+  } else {
+    data.push(...props.text.split('\n'))
+    lines.push(new Array(data.length).fill(''))
+    hide()
+  }
+})
 
 watch(props, async (newVal, oldVal) => {
   newVal.isActive ? show() : await hide()
@@ -52,36 +63,32 @@ watch(props, async (newVal, oldVal) => {
 </script>
 
 <template>
-  <!-- <div ref="container-for-portal-description" class="container"> -->
-  <div v-if="isActive" class="grey">Role: {{ props.role }}</div>
+  <div class="container">
+    <div v-if="isActive" class="grey">Role: {{ props.role }}</div>
 
-  <div v-if="isActive" class="stack"><b>Stack: </b>{{ props.stack }}</div>
+    <div v-if="isActive" class="stack"><b>Stack: </b>{{ props.stack }}</div>
 
-  <p v-for="(line, index) of lines" :key="index">
-    <span v-if="line.length">{{ line }}</span>
-  </p>
-  <!-- </div> -->
+    <p v-for="(line, index) of lines" :key="index">
+      <span v-if="line.length">{{ line }}</span>
+    </p>
+  </div>
 </template>
 
 <style scoped>
-/* .container {
+.container {
   padding: 16px 0 16px 4px;
-} */
+}
 .container > p {
   margin-bottom: 8px;
   font-size: 14px;
 }
 .grey {
   text-align: right;
-  color: #777;
+  color: var(--vt-c-black-mute);
 }
 
 .stack {
-  color: #58b;
+  color: var(--vt-c-green-dark);
   margin: 16px 0;
 }
-
-/* .description {
-  padding: 32px 16px;
-} */
 </style>

@@ -2,6 +2,7 @@
 
 body {
   background: var(--vt-c-white-soft);
+  /* font-family: Montserrat, 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; */
 }
 
 #app {
@@ -39,8 +40,8 @@ header .wrapper {
 nav {
   grid-area: nav;
   text-align: left;
-  margin-left: -1rem;
-  font-size: 1rem;
+  margin-left: 16px;
+  /* font-size: 1rem; */
 
   padding: 1rem 0;
   margin-top: 1rem;
@@ -138,13 +139,34 @@ h3 {
   }
 
   main {
+    width: calc(100vw - 64px);
     justify-self: center;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
   }
 
   nav {
     grid-area: none;
     text-align: center;
   }
+}
+
+@media (max-width: 520px) {
+  main {
+    width: 100vw;
+    height: max-content;
+    overflow: hidden;
+    margin-left: -32px;
+  }
+}
+
+.open-in-new {
+  color: #075;
+}
+
+.open-in-new:hover {
+  color: #097;
 }
 
 ::-webkit-scrollbar {

@@ -13,15 +13,11 @@ onMounted(() => {})
 const rouletteSize = ref(360)
 const offset = ref('180px')
 
-console.log(import.meta)
-
 const image = `url(${import.meta.env.BASE_URL}images/roulette.svg)`
 const center = `url(${import.meta.env.BASE_URL}images/JS.gif)`
 
 const rouletteImage = ref(image)
 const centerImage = ref(center)
-
-console.log(rouletteImage)
 
 const rouletteWeelAngle = ref('0deg')
 
@@ -42,7 +38,7 @@ const state = reactive<{ angles: number[] }>({
 console.log(import.meta.env.BASE_URL)
 
 function showDescription(item: RouletteItem) {
-  // console.log(item)
+  console.log(item.alt)
 }
 
 function rotateWeel(event: Event): void {
@@ -53,7 +49,6 @@ function rotateWeel(event: Event): void {
     (angle, index) =>
       (state.angles[index] = state.angles[index] < 330 ? state.angles[index] + 30 : 0),
   )
-  console.log(rouletteWeelAngle.value)
 }
 
 onMounted(() => {
@@ -67,41 +62,47 @@ onMounted(() => {
 <template>
   <main ref="roulete-container">
     <div class="skills-container">
-      <h4 v-for="(item, index) of items" :key="index">
+      <span v-for="(item, index) of items" :key="index" class="skills-item">
         {{ item.alt }}
-      </h4>
+      </span>
     </div>
-    <div ref="roulette-wheel" class="roulette-wheel" @click="rotateWeel">
-      <div
-        v-for="(item, index) of props.items"
-        :key="index"
-        class="roulette-item"
-        :style="{ transform: `rotate(${state.angles[index]}deg)` }"
-        @click="showDescription(item)"
-      >
-        <img
-          :src="item.src"
-          :width="item.width"
-          :height="item.height"
-          :alt="item.alt"
-          :style="{ transform: `rotate(${-state.angles[index]}deg)` }"
-        />
+    <div class="roulette-container">
+      <div ref="roulette-wheel" class="roulette-wheel" @click="rotateWeel">
+        <div
+          v-for="(item, index) of props.items"
+          :key="index"
+          class="roulette-item"
+          :style="{ transform: `rotate(${state.angles[index]}deg)` }"
+          @click="showDescription(item)"
+        >
+          <img
+            :src="item.src"
+            :width="item.width"
+            :height="item.height"
+            :alt="item.alt"
+            :style="{ transform: `rotate(${-state.angles[index]}deg)` }"
+          />
+        </div>
       </div>
     </div>
   </main>
 </template>
 
 <style scoped>
-main {
+/* main {
   width: 50vw;
   height: 50vw;
+} */
+.roulette-container {
+  position: relative;
+  right: 0;
+  top: 0;
 }
 .roulette-wheel {
   position: relative;
   width: 360px;
   height: 360px;
   box-sizing: content-box;
-  right: 0px;
   border-radius: 50%;
   background: transparent;
   border: solid 64px transparent;
@@ -139,4 +140,63 @@ main {
   border-radius: 50%;
   transform-origin: v-bind(offset) v-bind(offset);
 }
+
+.skills-container {
+  margin: 16px 0;
+}
+.skills-container > span {
+  display: inline-block;
+  color: #455;
+  margin: -8px 8px;
+  font-size: 16px;
+}
+
+.skills-container > span::before {
+  content: '•';
+  color: #095;
+  font-size: 36px;
+  padding: 0 8px 0 0;
+  vertical-align: sub;
+}
+
+.skills-container > span.active {
+  color: #455;
+  margin: 16px 8px;
+  font-size: 16px;
+}
+
+@media (max-width: 520px) {
+  .skills-container {
+    width: calc(100vw - 32px);
+    text-align: center;
+  }
+  /* .roulette-container {
+    position: absolute;
+    left: calc(50% - 64px);
+    top: calc(50% + 80px);
+    transform: translate(-50%, -50%);
+  } */
+  /* .roulette-wheel {
+    right: 25%;
+  } */
+}
+
+/* @media (max-width: 420px) {
+  .skills-container {
+    width: calc(100vw - 64px);
+    justify-self: center;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+  }
+  .roulette-container {
+    position: absolute;
+    left: calc(50% - 64px);
+    top: calc(50% + 80px);
+    transform: translate(-50%, -50%);
+  }
+  .roulette-wheel {
+    right: 25%;
+  }
+} */
 </style>
