@@ -40,14 +40,9 @@ function showDescription(item: RouletteItem) {
   console.log(item.alt)
 }
 
-function getClassName(item, index): string {
+function getClassName(item: RouletteItem, index: number): string {
   return state.angles[index] === 0 ? 'skills-item active' : 'skills-item'
 }
-
-const classObject = computed(() => ({
-  active: isActive.value && !error.value,
-  'text-danger': error.value && error.value.type === 'fatal',
-}))
 
 function rotateWeel(event: Event): void {
   let angle = parseInt(rouletteWeelAngle.value)
@@ -61,7 +56,7 @@ function rotateWeel(event: Event): void {
 
 onMounted(() => {
   props.items &&
-    props.items.map((item, index) => {
+    props.items.map((item: RouletteItem, index: number) => {
       state.angles.push(index * 30)
     })
 })
