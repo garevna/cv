@@ -35,11 +35,19 @@ const props = defineProps({
 const state = reactive<{ angles: number[] }>({
   angles: [],
 })
-console.log(import.meta.env.BASE_URL)
 
 function showDescription(item: RouletteItem) {
   console.log(item.alt)
 }
+
+function getClassName(item, index): string {
+  return state.angles[index] === 0 ? 'skills-item active' : 'skills-item'
+}
+
+const classObject = computed(() => ({
+  active: isActive.value && !error.value,
+  'text-danger': error.value && error.value.type === 'fatal',
+}))
 
 function rotateWeel(event: Event): void {
   let angle = parseInt(rouletteWeelAngle.value)
@@ -62,7 +70,7 @@ onMounted(() => {
 <template>
   <main ref="roulete-container">
     <div class="skills-container">
-      <span v-for="(item, index) of items" :key="index" class="skills-item">
+      <span v-for="(item, index) of items" :key="index" :class="getClassName(item, index)">
         {{ item.alt }}
       </span>
     </div>
@@ -139,30 +147,43 @@ onMounted(() => {
   text-align: center;
   border-radius: 50%;
   transform-origin: v-bind(offset) v-bind(offset);
+  user-select: none;
 }
 
 .skills-container {
-  margin: 16px 0;
+  margin: 32px 0;
 }
 .skills-container > span {
   display: inline-block;
-  color: #455;
-  margin: -8px 8px;
+  color: var(--vt-c-black-soft);
+  margin: 8px;
   font-size: 16px;
+  user-select: none;
 }
 
 .skills-container > span::before {
-  content: '•';
-  color: #095;
-  font-size: 36px;
+  content: '☼';
+  color: var(--vt-c-green);
+  font-size: 16px;
   padding: 0 8px 0 0;
-  vertical-align: sub;
+  vertical-align: middle;
 }
 
 .skills-container > span.active {
-  color: #455;
-  margin: 16px 8px;
-  font-size: 16px;
+  border: solid 1px #097;
+  border-radius: 16px;
+  padding: 4px 12px;
+  font-weight: bold;
+  color: var(--vt-c-green);
+  background: var(--vt-c-green-alpha);
+  /* background-image: linear-gradient(
+    to right,
+    rgba(0, 180, 150, 0.5),
+    rgba(0, 180, 140, 0.7) 50%,
+    rgba(0, 180, 150, 0.5)
+  );
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone; */
 }
 
 @media (max-width: 520px) {
@@ -170,33 +191,5 @@ onMounted(() => {
     width: calc(100vw - 32px);
     text-align: center;
   }
-  /* .roulette-container {
-    position: absolute;
-    left: calc(50% - 64px);
-    top: calc(50% + 80px);
-    transform: translate(-50%, -50%);
-  } */
-  /* .roulette-wheel {
-    right: 25%;
-  } */
 }
-
-/* @media (max-width: 420px) {
-  .skills-container {
-    width: calc(100vw - 64px);
-    justify-self: center;
-    justify-content: center;
-    padding: 0;
-    margin: 0;
-  }
-  .roulette-container {
-    position: absolute;
-    left: calc(50% - 64px);
-    top: calc(50% + 80px);
-    transform: translate(-50%, -50%);
-  }
-  .roulette-wheel {
-    right: 25%;
-  }
-} */
 </style>

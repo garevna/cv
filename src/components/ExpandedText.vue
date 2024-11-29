@@ -52,7 +52,7 @@ onMounted(() => {
     console.warn('props.text is not defined')
   } else {
     data.push(...props.text.split('\n'))
-    lines.push(new Array(data.length).fill(''))
+    lines.push(...new Array<string>(data.length).fill(''))
     hide()
   }
 })
