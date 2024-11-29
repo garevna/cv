@@ -9,6 +9,7 @@
     "preview": "vite preview",
     "test:unit": "vitest",
     "build-only": "vite build --base=/cv/",
+    "build-staging": "vite build --base=/cv-staging/",
     "type-check": "vue-tsc --build --force",
     "lint": "eslint . --fix",
     "format": "prettier --write src/",
