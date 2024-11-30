@@ -17,13 +17,13 @@
   background-color: #000;
   padding: 8px 8px 0 8px;
   color: #fff;
-  box-shadow: 3px 3px 5px #00000080;
+  /* box-shadow: 3px 3px 5px #00000080; */
   overflow: hidden;
 }
 .logo-box .over {
   position: absolute;
   top: 0;
-  margin: 8px 0;
+  margin: -24px 0;
   font-size: 11px;
 }
 .logo-box .noise {

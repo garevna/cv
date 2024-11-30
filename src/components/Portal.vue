@@ -36,7 +36,7 @@ watch(isReady, function (newVal) {
     <div ref="container-for-portal-description" class="container">
       <ExpandedText :isActive="isActive" :text="sourceData" v-model="isReady" />
     </div>
-    <div v-if="isActive && isReady" class="container">
+    <div v-if="isActive && isReady" class="container youtube-player">
       <iframe
         :width="frameWidth"
         :height="frameHeight"
@@ -50,3 +50,12 @@ watch(isReady, function (newVal) {
     </div>
   </div>
 </template>
+
+<style scoped>
+.container {
+  padding: 16px;
+}
+.youtube-player {
+  justify-self: center;
+}
+</style>

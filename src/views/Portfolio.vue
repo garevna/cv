@@ -8,8 +8,19 @@ import { pineappleDescription } from '../configs/pineapple-description'
 
 import { ref, computed, provide } from 'vue'
 
+const hand = `url(${import.meta.env.BASE_URL}images/hand.svg)`
+
+const handImage = ref(hand)
+
 let showDGtek = ref(false)
 let showPineapple = ref(false)
+
+const backgroundImage1 = ref('url(images/dgtek.png)')
+const backgroundImage2 = ref('url(images/pineapple.png)')
+const backgroundImage3 = ref('url(images/js-lessons.gif)')
+const backgroundImage4 = ref('url(images/JS.gif)')
+const backgroundImage5 = ref('url(images/comics.png)')
+const backgroundImage6 = ref('url(images/npm.svg)')
 
 // const state = ref({ sourceData: '', source: '' })
 provide(
@@ -31,100 +42,306 @@ function clickPineapple() {
   showPineapple.value = !showPineapple.value
   showDGtek.value = showPineapple.value ? false : showDGtek.value
 }
-const buttonCharDGtek = computed(() => (showDGtek.value ? '▲' : '▼'))
-const buttonCharPineapple = computed(() => (showPineapple.value ? '▲' : '▼'))
+
+function clearAll() {
+  showDGtek.value = false
+  showPineapple.value = false
+}
 </script>
 
 <template>
   <main>
-    <h2>Portfolio</h2>
-    <button @click="clickDGtek" class="button">
-      <img src="../assets/dgtek.png" alt="DGtek logo" width="64" />
-      <h4>
-        Portal <span class="highlighted-on-hover">{{ buttonCharDGtek }}</span>
-      </h4>
-    </button>
+    <div class="portfolio__container">
+      <div class="portfolio-buttons">
+        <a href="#" class="scene" data-social="DGtek portal">
+          <div class="cube">
+            <span class="icon icon-front normal-fone">
+              <img
+                src="../assets/dgtek.png"
+                alt="DGtek logo"
+                width="64"
+                heigh="48"
+                class="dgtek-icon"
+              />
+            </span>
+            <span class="icon icon-back">
+              <img
+                src="../assets/button-pointer.svg"
+                width="24"
+                height="24"
+                alt="DGtek portal"
+                class="highlighted-on-hover"
+                @click="clickDGtek"
+              />
+            </span>
+          </div>
+        </a>
+
+        <a href="#" class="scene" data-social="Pineapple CMS">
+          <div class="cube">
+            <span class="icon icon-front black-fone">
+              <img
+                src="../assets/pineapple.png"
+                alt="Pineapple logo"
+                width="44"
+                height="44"
+                class="pineapple-icon"
+              />
+            </span>
+            <span class="icon icon-back">
+              <img
+                src="../assets/button-pointer.svg"
+                width="24"
+                height="24"
+                alt="Pineapple CMS"
+                class="highlighted-on-hover"
+                @click="clickPineapple"
+              />
+            </span>
+          </div>
+        </a>
+
+        <a
+          href="https://garevna.github.io/js-lessons/"
+          class="scene"
+          data-social="JS-lessons"
+          target="_blank"
+        >
+          <div class="cube">
+            <span class="icon icon-front">
+              <GlitchLogo style="width: 70px; height: 70px" />
+            </span>
+            <span class="icon icon-back">
+              <img
+                src="../assets/open-in-new.svg"
+                width="24"
+                height="24"
+                alt="JS lessons"
+                class="highlighted-on-hover"
+                @click="clearAll"
+              />
+            </span>
+          </div>
+        </a>
+
+        <a
+          href="https://garevna.github.io/js-quiz/"
+          class="scene"
+          data-social="JS-quiz"
+          target="_blank"
+        >
+          <div class="cube">
+            <span class="icon icon-front black-fone">
+              <img src="../assets/js-icon.svg" width="48" height="48" alt="js-quiz" class="quiz" />
+            </span>
+            <span class="icon icon-back">
+              <img
+                src="../assets/open-in-new.svg"
+                width="24"
+                height="24"
+                alt="JS quiz"
+                class="highlighted-on-hover"
+                @click="clearAll"
+              />
+            </span>
+          </div>
+        </a>
+
+        <a
+          href="https://garevna.github.io/comics/"
+          class="scene"
+          data-social="comics"
+          target="_blank"
+        >
+          <div class="cube">
+            <span class="icon icon-front black-fone">
+              <img
+                src="../assets/comics-2.png"
+                width="70"
+                height="70"
+                alt="js-quiz"
+                class="comics"
+              />
+            </span>
+            <span class="icon icon-back">
+              <img
+                src="../assets/open-in-new.svg"
+                width="24"
+                height="24"
+                alt="Comics"
+                class="highlighted-on-hover"
+                @click="clearAll"
+              />
+            </span>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <hr />
+
+    <div v-if="!showDGtek && !showPineapple" class="tablo">
+      <h4>Projects</h4>
+    </div>
     <Portal :isActive="showDGtek" />
-
-    <button @click="clickPineapple" class="button">
-      <img src="../assets/pineapple.png" alt="Pineapple logo" width="52" />
-      <h4>
-        CMS <span class="highlighted-on-hover">{{ buttonCharPineapple }}</span>
-      </h4>
-    </button>
     <Pineapple :isActive="showPineapple" />
-
-    <button class="button">
-      <GlitchLogo width="56px" heigh="56px" />
-      <h4>
-        JS-lessons
-        <a href="https://garevna.github.io/js-lessons/" target="_blank" rel="noopener">
-          <img
-            src="../assets/open-in-new.svg"
-            width="24"
-            height="24"
-            alt="JS-lessons"
-            class="highlighted-on-hover"
-          />
-        </a>
-      </h4>
-    </button>
-
-    <button class="button">
-      <img src="../assets/js-icon.svg" width="64" height="64" alt="js-quiz" />
-      <h4>
-        JS-lessons
-        <a href="https://garevna.github.io/js-quiz/" target="_blank" rel="noopener">
-          <img
-            src="../assets/open-in-new.svg"
-            width="24"
-            height="24"
-            alt="JS-quiz"
-            class="highlighted-on-hover"
-          />
-        </a>
-      </h4>
-    </button>
   </main>
 </template>
 
-<style>
-.button {
+<style sccs scoped>
+.portfolio__container {
+  max-width: 100vw;
+}
+
+.portfolio-buttons {
+  height: max-content;
+  margin: 48px 0;
+  max-width: 100vw;
+  display: flex;
+  flex-flow: wrap;
+  justify-content: center;
+  justify-items: center;
+  row-gap: 16px;
+}
+
+.dgtek-icon,
+.pineapple-icon,
+.quiz,
+.comics {
+  vertical-align: middle;
+  margin-top: -8px;
+}
+
+.portfolio-buttons .scene {
+  float: left;
+  text-decoration: none;
+  margin: 0 8px;
+}
+
+.portfolio-buttons .icon {
+  display: block;
+  line-height: 70px;
+  text-align: center;
+  font-size: 2.2em;
+  color: var(--vt-c-black);
+  outline: 1px solid var(--vt-c-black-light);
+}
+.normal-fone {
+  background: var(--vt-c-body-back);
+}
+.black-fone {
+  background: #000;
+}
+
+.portfolio-buttons .icon-back {
+  font-size: 1.6em;
+  background: var(--vt-c-body-back);
+}
+
+.portfolio-buttons .scene {
+  width: 80px;
+  height: 80px;
+  perspective: 800px;
+  user-select: none;
+}
+
+.portfolio-buttons .cube {
+  position: relative;
+  width: 72px;
+  height: 72px;
+  transform-style: preserve-3d;
+  transition: 0.5s all;
+  user-select: none;
+}
+
+.scene:hover .cube,
+.scene:active .cube {
+  transform: rotateX(90deg);
+  user-select: none;
+}
+
+.portfolio-buttons .icon-front {
+  position: absolute;
   width: 100%;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 64px;
-  grid-template-areas: 'image title';
-  cursor: pointer;
-  font-size: 18px;
-  font-weight: bold;
-  border: none;
-  border-radius: 4px;
-  outline: none;
-  padding: 4px 8px;
-}
-.button > img {
-  grid-area: image;
-  align-self: center;
-}
-.button > h4 {
-  grid-area: title;
-  align-self: center;
-  text-align: end;
-  font-weight: bold;
-  font-family: Montserrat, Verdana, Geneva, Tahoma, sans-serif;
-  color: var(--vt-c-green);
+  transform: rotateX(0deg) translate3d(0px, 0px, 35px);
 }
 
-.button a > img {
-  vertical-align: text-bottom;
+.portfolio-buttons .icon-back {
+  position: absolute;
+  width: 100%;
+  transform: rotateX(-90deg) translate3d(0px, 0px, 35px);
 }
 
-@media (min-width: 1024px) {
-  .about {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
+div.tablo {
+  width: 320px;
+  height: 320px;
+  border-radius: 1em;
+  perspective: 600px;
+  background: #ddd;
+  border: solid 1px #eee;
+  box-shadow:
+    0 0.125em 0.3125em rgba(0, 0, 0, 0.25),
+    0 0.02125em 0.06125em rgba(0, 0, 0, 0.25);
+}
+
+div.tablo::before {
+  content: ' ';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  border-radius: 0 0 1em 1em;
+  width: 100%;
+  height: 50%;
+  transform-origin: center top;
+  transform: rotateX(180deg);
+  background: #ddd;
+  border: solid 1px #eee;
+  transition: 0.7s ease-in-out transform;
+  background-repeat: no-repeat;
+  background-size: 80px;
+  background-position: center;
+  animation:
+    rotor 4s infinite,
+    change-picture 24s infinite;
+}
+
+@keyframes rotor {
+  0% {
+    transform: rotateX(180deg);
+  }
+  40% {
+    transform: rotateX(0deg);
+  }
+  80% {
+    transform: rotateX(0deg);
+  }
+  100% {
+    transform: rotateX(180deg);
+  }
+}
+
+.tablo h4 {
+  margin: 16px 24px;
+}
+
+@keyframes change-picture {
+  0% {
+    background-image: v-bind(backgroundImage1);
+  }
+  18% {
+    background-image: v-bind(backgroundImage2);
+  }
+  36% {
+    background-image: v-bind(backgroundImage3);
+  }
+  54% {
+    background-image: v-bind(backgroundImage4);
+  }
+  72% {
+    background-image: v-bind(backgroundImage5);
+  }
+  100% {
+    background-image: v-bind(backgroundImage1);
   }
 }
 </style>
