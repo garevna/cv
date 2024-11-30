@@ -15,12 +15,12 @@ const handImage = ref(hand)
 let showDGtek = ref(false)
 let showPineapple = ref(false)
 
-const backgroundImage1 = ref('url(images/dgtek.png)')
-const backgroundImage2 = ref('url(images/pineapple.png)')
-const backgroundImage3 = ref('url(images/js-lessons.gif)')
-const backgroundImage4 = ref('url(images/JS.gif)')
-const backgroundImage5 = ref('url(images/comics.png)')
-const backgroundImage6 = ref('url(images/npm.svg)')
+const backgroundImage1 = ref(`url(${import.meta.env.BASE_URL}images/dgtek.png)`)
+const backgroundImage2 = ref(`url(${import.meta.env.BASE_URL}images/pineapple.png)`)
+const backgroundImage3 = ref(`url(${import.meta.env.BASE_URL}images/js-lessons.gif)`)
+const backgroundImage4 = ref(`url(${import.meta.env.BASE_URL}images/JS.gif)`)
+const backgroundImage5 = ref(`url(${import.meta.env.BASE_URL}images/comics.png)`)
+const backgroundImage6 = ref(`url(${import.meta.env.BASE_URL}images/npm.svg)`)
 
 // const state = ref({ sourceData: '', source: '' })
 provide(
@@ -175,6 +175,29 @@ function clearAll() {
             </span>
           </div>
         </a>
+
+        <a
+          href="https://www.npmjs.com/settings/garevna/packages"
+          class="scene"
+          data-social="npm"
+          target="_blank"
+        >
+          <div class="cube">
+            <span class="icon icon-front black-fone">
+              <img src="../assets/npm.svg" width="70" height="70" alt="js-quiz" class="npm" />
+            </span>
+            <span class="icon icon-back">
+              <img
+                src="../assets/open-in-new.svg"
+                width="24"
+                height="24"
+                alt="Comics"
+                class="highlighted-on-hover"
+                @click="clearAll"
+              />
+            </span>
+          </div>
+        </a>
       </div>
     </div>
 
@@ -207,7 +230,8 @@ function clearAll() {
 .dgtek-icon,
 .pineapple-icon,
 .quiz,
-.comics {
+.comics,
+.npm {
   vertical-align: middle;
   margin-top: -8px;
 }
@@ -300,12 +324,90 @@ div.tablo::before {
   background-repeat: no-repeat;
   background-size: 80px;
   background-position: center;
-  animation:
-    rotor 4s infinite,
-    change-picture 24s infinite;
+  animation: rotor 24s infinite;
+  /* change-picture 24s infinite; */
 }
 
 @keyframes rotor {
+  0% {
+    transform: rotateX(180deg);
+    background-image: v-bind(backgroundImage1);
+  }
+  6% {
+    transform: rotateX(0deg);
+    background-image: v-bind(backgroundImage1);
+  }
+  12% {
+    transform: rotateX(0deg);
+    background-image: v-bind(backgroundImage1);
+  }
+  16% {
+    transform: rotateX(180deg);
+    background-image: v-bind(backgroundImage2);
+  }
+  22% {
+    transform: rotateX(0deg);
+    background-image: v-bind(backgroundImage2);
+  }
+  28% {
+    transform: rotateX(0deg);
+    background-image: v-bind(backgroundImage2);
+  }
+  32% {
+    transform: rotateX(180deg);
+    background-image: v-bind(backgroundImage3);
+  }
+  38% {
+    transform: rotateX(0deg);
+    background-image: v-bind(backgroundImage3);
+  }
+  44% {
+    transform: rotateX(0deg);
+    background-image: v-bind(backgroundImage3);
+  }
+  50% {
+    transform: rotateX(180deg);
+    background-image: v-bind(backgroundImage4);
+  }
+  56% {
+    transform: rotateX(0deg);
+    background-image: v-bind(backgroundImage4);
+  }
+  62% {
+    transform: rotateX(0deg);
+    background-image: v-bind(backgroundImage4);
+  }
+  66% {
+    transform: rotateX(180deg);
+    background-image: v-bind(backgroundImage5);
+  }
+  72% {
+    transform: rotateX(0deg);
+    background-image: v-bind(backgroundImage5);
+  }
+  78% {
+    transform: rotateX(0deg);
+    background-image: v-bind(backgroundImage5);
+  }
+  82% {
+    transform: rotateX(180deg);
+    background-image: v-bind(backgroundImage6);
+  }
+  88% {
+    transform: rotateX(0deg);
+    background-image: v-bind(backgroundImage6);
+  }
+  94% {
+    transform: rotateX(0deg);
+    background-image: v-bind(backgroundImage6);
+  }
+  100% {
+    transform: rotateX(180deg);
+    background-image: v-bind(backgroundImage1);
+  }
+}
+
+/* @keyframes rotor {
   0% {
     transform: rotateX(180deg);
   }
@@ -318,7 +420,7 @@ div.tablo::before {
   100% {
     transform: rotateX(180deg);
   }
-}
+} */
 
 .tablo h4 {
   margin: 16px 24px;

@@ -23,6 +23,7 @@ header {
   grid-template-areas: 'avatar info' 'nav nav';
   line-height: 1.5;
   align-self: center;
+  column-gap: 16px;
 }
 
 header .wrapper {
