@@ -33,6 +33,7 @@ provide('win', win)
     <nav>
       <RouterLink class="link" to="/">Skills</RouterLink>
       <RouterLink class="link" to="/portfolio">Portfolio</RouterLink>
+      <RouterLink class="link" to="/reviews">Reviews</RouterLink>
     </nav>
   </header>
 

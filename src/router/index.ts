@@ -1,8 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Skills from '../views/Skills.vue'
 
-console.log(import.meta)
-
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -15,6 +13,11 @@ const router = createRouter({
       path: '/portfolio',
       name: 'portfolio',
       component: () => import('../views/Portfolio.vue'),
+    },
+    {
+      path: '/reviews',
+      name: 'Reviews',
+      component: () => import('../views/Reviews.vue'),
     },
   ],
 })

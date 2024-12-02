@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { sloganList } from '../configs/sloganList'
-import { ref, reactive, computed, onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import type { Ref } from 'vue'
 
 interface SloganList {
@@ -92,7 +92,7 @@ function typeSlogan(slogan: string, counter: number = 0): Promise<string> {
   left: 0;
   width: 100vw;
   height: 42px;
-  background: #073;
+  background: var(--vt-c-green);
   padding: 8px 0;
   margin: 0 auto;
   color: #eee;
@@ -111,7 +111,7 @@ function typeSlogan(slogan: string, counter: number = 0): Promise<string> {
   position: absolute;
   left: 0;
   margin-top: -4px;
-  background: #7b9;
+  background: #fff9;
   padding: 4px;
   border-radius: 50%;
   width: 32px;
@@ -121,11 +121,11 @@ function typeSlogan(slogan: string, counter: number = 0): Promise<string> {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: 14px;
   font-weight: bold;
-  color: #070;
+  color: var(--vt-c-green);
 }
 
 .language-switcher:hover {
-  background: #9ca;
+  background: #fffd;
 }
 
 @media (max-width: 850px) {

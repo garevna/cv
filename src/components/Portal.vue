@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { portalDescription } from '../configs/portal-description'
 import ExpandedText from './ExpandedText.vue'
-import { ref, reactive, useTemplateRef, onMounted, watch, inject } from 'vue'
+import { ref, reactive, useTemplateRef, watch, computed } from 'vue'
 
 const props = defineProps({
   isActive: Boolean,
@@ -12,6 +12,8 @@ let isReady = ref(false)
 const sourceData = ref(portalDescription)
 
 const container = useTemplateRef('container-for-portal-description')
+
+const paddings = computed(() => (props.isActive ? '16px' : '0'))
 
 interface Bounds {
   width: number
@@ -32,28 +34,26 @@ watch(isReady, function (newVal) {
 </script>
 
 <template>
-  <div>
-    <div ref="container-for-portal-description" class="container">
-      <ExpandedText :isActive="isActive" :text="sourceData" v-model="isReady" />
-    </div>
-    <div v-if="isActive && isReady" class="container youtube-player">
-      <iframe
-        :width="frameWidth"
-        :height="frameHeight"
-        src="https://www.youtube.com/embed/videoseries?list=PLaum0i8Jzw-uzioRfS95KUfMyH4Y3unkT&autoplay=1"
-        title="Portal"
-        frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        referrerpolicy="strict-origin-when-cross-origin"
-        allowfullscreen
-      ></iframe>
-    </div>
+  <div ref="container-for-portal-description" class="container">
+    <ExpandedText :isActive="isActive" :text="sourceData" v-model="isReady" />
+  </div>
+  <div v-if="isActive && isReady" class="container youtube-player">
+    <iframe
+      :width="frameWidth"
+      :height="frameHeight"
+      src="https://www.youtube.com/embed/videoseries?list=PLaum0i8Jzw-uzioRfS95KUfMyH4Y3unkT&autoplay=1"
+      title="Portal"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      referrerpolicy="strict-origin-when-cross-origin"
+      allowfullscreen
+    ></iframe>
   </div>
 </template>
 
 <style scoped>
 .container {
-  padding: 16px;
+  padding: v-bind(paddings);
 }
 .youtube-player {
   justify-self: center;

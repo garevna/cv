@@ -17,6 +17,9 @@ const props = defineProps({
   },
 })
 
+const paddings = computed(() => (props.isActive ? '16px' : '0'))
+const marginBottom = computed(() => (props.isActive ? '8px' : '0'))
+
 const data = reactive<string[]>([])
 const lines = reactive<string[]>([])
 
@@ -80,10 +83,10 @@ watch(props, async (newVal, oldVal) => {
 
 <style scoped>
 .container {
-  padding: 16px 0 16px 4px;
+  padding: v-bind(paddings);
 }
 .container > p {
-  margin-bottom: 8px;
+  margin-bottom: v-bind(marginBottom);
   font-size: 14px;
   text-indent: 24px;
   text-align: justify;
@@ -91,16 +94,16 @@ watch(props, async (newVal, oldVal) => {
 .role {
   text-align: right;
   color: var(--vt-c-black-mute);
-  padding-bottom: 12px;
+  padding-bottom: v-bind(paddings);
 }
 
 .stack {
   text-align: justify;
-  padding-bottom: 16px;
+  padding-bottom: v-bind(paddings);
 }
 
 .stack-items {
   color: var(--vt-c-green-dark);
-  margin: 16px 0;
+  margin: v-bind(paddings) 0;
 }
 </style>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useTemplateRef, reactive, ref, onMounted, inject, computed } from 'vue'
+import { reactive, ref, onMounted, inject } from 'vue'
 
 interface Win {
   width: number
@@ -92,10 +92,6 @@ onMounted(() => {
 </template>
 
 <style scoped>
-/* main {
-  width: 50vw;
-  height: 50vw;
-} */
 .roulette-container {
   position: relative;
   right: 0;
@@ -171,14 +167,6 @@ onMounted(() => {
   font-weight: bold;
   color: var(--vt-c-green);
   background: var(--vt-c-green-alpha);
-  /* background-image: linear-gradient(
-    to right,
-    rgba(0, 180, 150, 0.5),
-    rgba(0, 180, 140, 0.7) 50%,
-    rgba(0, 180, 150, 0.5)
-  );
-  -webkit-box-decoration-break: clone;
-  box-decoration-break: clone; */
 }
 
 @media (max-width: 520px) {

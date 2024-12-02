@@ -2,15 +2,10 @@
 import Portal from '../components/Portal.vue'
 import Pineapple from '../components/Pineapple.vue'
 import GlitchLogo from '../components/GlitchLogo.vue'
+import PointerButton from '../components/PointerButton.vue'
+import LinkButton from '../components/LinkButton.vue'
 
-import { portalDescription } from '../configs/portal-description'
-import { pineappleDescription } from '../configs/pineapple-description'
-
-import { ref, computed, provide } from 'vue'
-
-const hand = `url(${import.meta.env.BASE_URL}images/hand.svg)`
-
-const handImage = ref(hand)
+import { ref } from 'vue'
 
 let showDGtek = ref(false)
 let showPineapple = ref(false)
@@ -21,18 +16,6 @@ const backgroundImage3 = ref(`url(${import.meta.env.BASE_URL}images/js-lessons.g
 const backgroundImage4 = ref(`url(${import.meta.env.BASE_URL}images/JS.gif)`)
 const backgroundImage5 = ref(`url(${import.meta.env.BASE_URL}images/comics.png)`)
 const backgroundImage6 = ref(`url(${import.meta.env.BASE_URL}images/npm.svg)`)
-
-// const state = ref({ sourceData: '', source: '' })
-provide(
-  'source-data',
-  computed(() =>
-    showDGtek.value ? portalDescription : showPineapple.value ? pineappleDescription : '',
-  ),
-)
-provide(
-  'target-component',
-  computed(() => (showDGtek.value ? 'dgtek' : showPineapple.value ? 'pineapple' : '')),
-)
 
 function clickDGtek(): void {
   showDGtek.value = !showDGtek.value
@@ -64,16 +47,7 @@ function clearAll() {
                 class="dgtek-icon"
               />
             </span>
-            <span class="icon icon-back">
-              <img
-                src="../assets/button-pointer.svg"
-                width="24"
-                height="24"
-                alt="DGtek portal"
-                class="highlighted-on-hover"
-                @click="clickDGtek"
-              />
-            </span>
+            <PointerButton alt="DGtek portal" @click="clickDGtek" />
           </div>
         </a>
 
@@ -88,16 +62,7 @@ function clearAll() {
                 class="pineapple-icon"
               />
             </span>
-            <span class="icon icon-back">
-              <img
-                src="../assets/button-pointer.svg"
-                width="24"
-                height="24"
-                alt="Pineapple CMS"
-                class="highlighted-on-hover"
-                @click="clickPineapple"
-              />
-            </span>
+            <PointerButton alt="Pineapple CMS" @click="clickPineapple" />
           </div>
         </a>
 
@@ -111,16 +76,7 @@ function clearAll() {
             <span class="icon icon-front">
               <GlitchLogo style="width: 70px; height: 70px" />
             </span>
-            <span class="icon icon-back">
-              <img
-                src="../assets/open-in-new.svg"
-                width="24"
-                height="24"
-                alt="JS lessons"
-                class="highlighted-on-hover"
-                @click="clearAll"
-              />
-            </span>
+            <LinkButton alt="JS lessons" @click="clearAll" />
           </div>
         </a>
 
@@ -134,16 +90,7 @@ function clearAll() {
             <span class="icon icon-front black-fone">
               <img src="../assets/js-icon.svg" width="48" height="48" alt="js-quiz" class="quiz" />
             </span>
-            <span class="icon icon-back">
-              <img
-                src="../assets/open-in-new.svg"
-                width="24"
-                height="24"
-                alt="JS quiz"
-                class="highlighted-on-hover"
-                @click="clearAll"
-              />
-            </span>
+            <LinkButton alt="JS quiz" @click="clearAll" />
           </div>
         </a>
 
@@ -163,39 +110,16 @@ function clearAll() {
                 class="comics"
               />
             </span>
-            <span class="icon icon-back">
-              <img
-                src="../assets/open-in-new.svg"
-                width="24"
-                height="24"
-                alt="Comics"
-                class="highlighted-on-hover"
-                @click="clearAll"
-              />
-            </span>
+            <LinkButton alt="Comics" @click="clearAll" />
           </div>
         </a>
 
-        <a
-          href="https://www.npmjs.com/settings/garevna/packages"
-          class="scene"
-          data-social="npm"
-          target="_blank"
-        >
+        <a href="https://www.npmjs.com/~garevna" class="scene" data-social="npm" target="_blank">
           <div class="cube">
             <span class="icon icon-front black-fone">
-              <img src="../assets/npm.svg" width="70" height="70" alt="js-quiz" class="npm" />
+              <img src="../assets/npm.svg" width="64" height="64" alt="js-quiz" class="npm" />
             </span>
-            <span class="icon icon-back">
-              <img
-                src="../assets/open-in-new.svg"
-                width="24"
-                height="24"
-                alt="Comics"
-                class="highlighted-on-hover"
-                @click="clearAll"
-              />
-            </span>
+            <LinkButton alt="npm registry" @click="clearAll" />
           </div>
         </a>
       </div>
@@ -325,7 +249,6 @@ div.tablo::before {
   background-size: 80px;
   background-position: center;
   animation: rotor 24s infinite;
-  /* change-picture 24s infinite; */
 }
 
 @keyframes rotor {
@@ -407,43 +330,7 @@ div.tablo::before {
   }
 }
 
-/* @keyframes rotor {
-  0% {
-    transform: rotateX(180deg);
-  }
-  40% {
-    transform: rotateX(0deg);
-  }
-  80% {
-    transform: rotateX(0deg);
-  }
-  100% {
-    transform: rotateX(180deg);
-  }
-} */
-
 .tablo h4 {
   margin: 16px 24px;
-}
-
-@keyframes change-picture {
-  0% {
-    background-image: v-bind(backgroundImage1);
-  }
-  18% {
-    background-image: v-bind(backgroundImage2);
-  }
-  36% {
-    background-image: v-bind(backgroundImage3);
-  }
-  54% {
-    background-image: v-bind(backgroundImage4);
-  }
-  72% {
-    background-image: v-bind(backgroundImage5);
-  }
-  100% {
-    background-image: v-bind(backgroundImage1);
-  }
 }
 </style>
