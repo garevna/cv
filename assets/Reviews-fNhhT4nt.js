@@ -1,0 +1,1 @@
+import{_ as e,b as c,a as s}from"./index-D7PTfeXj.js";const t="/cv/assets/recomendation-BTWkX7TV.png",o={},n={src:t,width:"100%"};function _(a,r){return s(),c("img",n)}const i=e(o,[["render",_],["__scopeId","data-v-a06d63c1"]]);export{i as default};
