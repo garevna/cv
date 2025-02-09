@@ -2,74 +2,7 @@
 
 body {
   background: var(--vt-c-white-soft);
-  /* font-family: Montserrat, 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; */
-}
-
-#app {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: calc(100vh - 64px) 1fr;
-  align-items: start;
-  grid-template-areas: 'header aside';
-  padding: 0 2rem;
-  row-gap: 48px;
-  font-weight: normal;
-}
-
-header {
-  grid-area: header;
-  display: grid;
-  grid-template-columns: 180px 1fr;
-  grid-template-areas: 'avatar info' 'nav nav';
-  line-height: 1.5;
-  align-self: center;
-  column-gap: 16px;
-}
-
-header .wrapper {
-  grid-area: info;
-  display: flex;
-  place-items: flex-start;
-  flex-wrap: wrap;
-}
-
-.logo {
-  grid-area: avatar;
-  margin: 0 2rem 0 0;
-}
-
-nav {
-  grid-area: nav;
-  text-align: left;
-  margin-left: 16px;
-  /* font-size: 1rem; */
-
-  padding: 1rem 0;
-  margin-top: 1rem;
-}
-
-.logo {
-  margin: 0 2rem 0 0;
-}
-
-main {
-  grid-area: aside;
-  width: 100%;
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-row-gap: 8px;
-  justify-self: center;
-  padding: 0 16px 0 0;
-  margin-top: 48px;
-  align-items: center;
-  justify-items: center;
-  padding-bottom: 80px;
-}
-
-.logo {
-  grid-area: avatar;
-  display: block;
-  margin: 0 auto 2rem;
+  font-family: Montserrat, 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
 nav > .link {
@@ -116,51 +49,6 @@ h3 {
 @media (hover: hover) {
   a:hover {
     background-color: transparent;
-  }
-}
-
-@media (max-width: 1024px) {
-  #app {
-    margin-top: 48px;
-    grid-template-columns: 1fr;
-    grid-template-rows: 360px max-content;
-    grid-template-areas: 'header header' 'aside aside';
-    padding: 0;
-  }
-
-  header {
-    margin-top: 48px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-
-  header .wrapper {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-
-  main {
-    width: calc(100vw - 64px);
-    justify-self: center;
-    justify-content: center;
-    padding: 0;
-    margin: 0;
-  }
-
-  nav {
-    grid-area: none;
-    text-align: center;
-  }
-}
-
-@media (max-width: 520px) {
-  main {
-    width: 100vw;
-    height: max-content;
-    overflow: hidden;
-    margin-left: 0px;
   }
 }
 

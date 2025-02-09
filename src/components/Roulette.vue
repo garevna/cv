@@ -1,17 +1,17 @@
 <script setup lang="ts">
-import { reactive, ref, onMounted, inject } from 'vue'
+import { injectionKeyForWin } from '@/composables'
+import type { Reactive } from 'vue'
+import { computed, inject, reactive, ref } from 'vue'
 
-interface Win {
-  width: number
-  height: number
-}
+const win = inject(injectionKeyForWin) as Reactive<{ width: number; height: number }>
 
-let win = inject('win') as Win
+const rouletteSize = computed(() => (win.width > 430 ? 360 : win.width > 360 ? 320 : 260))
+const diameter = computed(() => rouletteSize.value + 'px')
+const offset = computed(() => rouletteSize.value / 2 + 'px')
+const imageSize = computed(() => (win.width > 430 ? 64 : win.width > 360 ? 48 : 40))
+const borderWidth = computed(() => imageSize.value + 4 + 'px')
 
-onMounted(() => {})
-
-const rouletteSize = ref(360)
-const offset = ref('180px')
+const startAngle = 45
 
 const image = `url(${import.meta.env.BASE_URL}images/roulette.svg)`
 const center = `url(${import.meta.env.BASE_URL}images/JS.gif)`
@@ -21,69 +21,89 @@ const centerImage = ref(center)
 
 const rouletteWeelAngle = ref('0deg')
 
-interface RouletteItem {
+interface Item {
   src: string
   width: number
   height: number
   alt: string
 }
 
+interface RouletteItem extends Item {
+  index: number
+  angle: number
+  className: string
+}
+
 const props = defineProps({
-  items: Array<RouletteItem>,
+  items: {
+    type: Array<Item>,
+    required: true,
+  },
 })
 
-const state = reactive<{ angles: number[] }>({
-  angles: [],
-})
+const rouletteItems: Reactive<RouletteItem[]> = reactive(
+  props.items?.map((item, index) =>
+    Object.assign(item, { index, angle: startAngle + index * 30, className: 'roulette-item' }),
+  ),
+)
 
-function showDescription(item: RouletteItem) {
-  console.log(item.alt)
+function getClassName(item: RouletteItem): string {
+  return item.angle === startAngle ? 'skills-item active' : 'skills-item'
 }
 
-function getClassName(item: RouletteItem, index: number): string {
-  return state.angles[index] === 0 ? 'skills-item active' : 'skills-item'
+function rotateWheelByAngle(angle: number) {
+  const before = parseInt(rouletteWeelAngle.value)
+  const after = before + angle > 360 ? before + angle - 360 : before + angle
+  rouletteWeelAngle.value = `${after}deg`
 }
 
-function rotateWeel(event: Event): void {
-  let angle = parseInt(rouletteWeelAngle.value)
-  angle += angle < 330 ? 30 : 0
-  rouletteWeelAngle.value = `${angle + 30}deg`
-  state.angles.forEach(
-    (angle, index) =>
-      (state.angles[index] = state.angles[index] < 330 ? state.angles[index] + 30 : 0),
-  )
+function rotateRouletteItemByAngle(item: RouletteItem, angle: number) {
+  const after = item.angle + angle > 360 ? item.angle + angle - 360 : item.angle + angle
+  Object.assign(item, {
+    angle: after,
+    className: after === startAngle ? 'roulette-item active' : 'roulette-item',
+  })
 }
 
-onMounted(() => {
-  props.items &&
-    props.items.map((item: RouletteItem, index: number) => {
-      state.angles.push(index * 30)
-    })
-})
+function moveRouletteItemToFront(current: RouletteItem) {
+  const angle = current.angle - startAngle
+  rotateWheelByAngle(angle)
+
+  rouletteItems.forEach((item) => rotateRouletteItemByAngle(item, -angle))
+}
+
+function rotateWeel(event: MouseEvent): void {
+  const target = event.target as HTMLElement
+  if (target.id !== 'roulette-wheel') {
+    return
+  }
+  rotateWheelByAngle(30)
+  rouletteItems.forEach((item) => rotateRouletteItemByAngle(item, 30))
+}
 </script>
 
 <template>
   <main ref="roulete-container">
     <div class="skills-container">
-      <span v-for="(item, index) of items" :key="index" :class="getClassName(item, index)">
+      <span v-for="(item, index) of rouletteItems" :key="index" :class="getClassName(item)">
         {{ item.alt }}
       </span>
     </div>
     <div class="roulette-container">
-      <div ref="roulette-wheel" class="roulette-wheel" @click="rotateWeel">
+      <div id="roulette-wheel" class="roulette-wheel" @click="rotateWeel">
         <div
-          v-for="(item, index) of props.items"
+          v-for="(item, index) of rouletteItems"
           :key="index"
-          class="roulette-item"
-          :style="{ transform: `rotate(${state.angles[index]}deg)` }"
-          @click="showDescription(item)"
+          :class="item.className"
+          :style="{ transform: `rotate(${item.angle}deg)` }"
+          @click="moveRouletteItemToFront(item)"
         >
           <img
             :src="item.src"
-            :width="item.width"
-            :height="item.height"
+            :width="imageSize"
+            :height="imageSize"
             :alt="item.alt"
-            :style="{ transform: `rotate(${-state.angles[index]}deg)` }"
+            :style="{ transform: `rotate(${-item.angle}deg)` }"
           />
         </div>
       </div>
@@ -96,15 +116,16 @@ onMounted(() => {
   position: relative;
   right: 0;
   top: 0;
+  margin-bottom: 36px;
 }
 .roulette-wheel {
   position: relative;
-  width: 360px;
-  height: 360px;
+  width: v-bind(diameter);
+  height: v-bind(diameter);
   box-sizing: content-box;
   border-radius: 50%;
   background: transparent;
-  border: solid 64px transparent;
+  border: solid v-bind(borderWidth) transparent;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   transition: all 0.5s;
   cursor: pointer;
@@ -117,7 +138,7 @@ onMounted(() => {
   left: 0;
   width: 100%;
   height: 100%;
-  border: solid 10px transparent;
+  border: solid 12px transparent;
   background-image: v-bind(centerImage), v-bind(rouletteImage);
   background-size: 80px, cover;
   background-position: center;
@@ -129,8 +150,6 @@ onMounted(() => {
 }
 .roulette-item {
   position: absolute;
-  width: 64px;
-  height: 64px;
   background-position: center;
   background-size: contain;
   background-repeat: no-repeat;
@@ -139,6 +158,11 @@ onMounted(() => {
   border-radius: 50%;
   transform-origin: v-bind(offset) v-bind(offset);
   user-select: none;
+  filter: grayscale(100%);
+}
+
+.active {
+  filter: grayscale(0%);
 }
 
 .skills-container {

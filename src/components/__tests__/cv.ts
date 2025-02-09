@@ -1,11 +1,11 @@
-import { describe, it, expect } from 'vitest'
+import { describe, expect, it } from 'vitest'
 
 import { mount } from '@vue/test-utils'
-import Education from '../Education.vue'
+import AboutMe from '../AboutMe.vue'
 
-describe('education', () => {
+describe('about', () => {
   it('renders properly', () => {
-    const wrapper = mount(Education, { props: { msg: 'IRINA FYLYPPOVA' } })
-    expect(wrapper.text()).toContain('Education')
+    const wrapper = mount(AboutMe, { props: { msg: 'IRINA FYLYPPOVA' } })
+    expect(wrapper.text()).toContain('AboutMe')
   })
 })

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, reactive, watch, onBeforeMount, onMounted, onBeforeUnmount, computed } from 'vue'
+import { computed, onMounted, reactive, watch } from 'vue'
 
 const isReady = defineModel()
 
@@ -60,18 +60,18 @@ onMounted(() => {
   }
 })
 
-watch(props, async (newVal, oldVal) => {
+watch(props, async (newVal) => {
   newVal.isActive ? show() : await hide()
 })
 </script>
 
 <template>
   <div class="container">
-    <div v-if="isActive" class="role">
+    <div v-if="isActive && props.role" class="role">
       Role: <span>{{ props.role }}</span>
     </div>
 
-    <div v-if="isActive" class="stack">
+    <div v-if="isActive && props.stack" class="stack">
       <b>Stack: </b><span class="stack-items">{{ props.stack }}</span>
     </div>
 
@@ -87,7 +87,7 @@ watch(props, async (newVal, oldVal) => {
 }
 .container > p {
   margin-bottom: v-bind(marginBottom);
-  font-size: 14px;
+  font-size: 13px;
   text-indent: 24px;
   text-align: justify;
 }

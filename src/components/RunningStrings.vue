@@ -1,28 +1,27 @@
 <script setup lang="ts">
-import { sloganList } from '../configs/sloganList'
-import { ref, computed, onMounted } from 'vue'
-import type { Ref } from 'vue'
+import { sloganList } from '@/configs'
+// import type { Ref } from 'vue'
+// import { computed, onMounted, ref } from 'vue' /* PartiallyEnd: #3632/both.vue */
+import { computed, onMounted, ref } from 'vue'
 
-interface SloganList {
+type SloganList = {
   eng: string[]
   ua: string[]
   ru: string[]
 }
 
 const lang = ref('eng')
-const order = ref(0)
 
-const slogans: Ref = ref<SloganList>(sloganList)
+// const slogans: Ref = ref<SloganList>(sloganList)
 
-const language = computed(() => {
-  return lang.value
-})
+const slogans = computed(() => sloganList[lang.value as keyof SloganList].join(' • '))
+const string = ref(slogans.value)
 
-const messages = computed((): string[] => {
-  return slogans.value[lang.value]
-})
+// const messages = computed((): string[] => {
+//   return slogans.value[lang.value]
+// })
 
-let message = ref(messages.value[0])
+// let message = ref(messages.value[0])
 
 onMounted(() => {
   show(0)
@@ -33,44 +32,22 @@ function switchLang(): void {
 }
 
 async function show(timer: number): Promise<any> {
-  if (timer++ < 10) {
-    window.requestAnimationFrame(() => {
-      window.requestAnimationFrame(show.bind(null, timer))
-    })
-    return
+  // if (timer++ < 10) {
+  //   window.requestAnimationFrame(() => {
+  //     window.requestAnimationFrame(show.bind(null, timer))
+  //   })
+  //   return
+  // }
+
+  // order.value = order.value < messages.value.length - 1 ? ++order.value : 0
+
+  if (timer++ === 8) {
+    string.value = string.value.slice(1) + string.value.slice(0)[0]
+    timer = 0
   }
-
-  order.value = order.value < messages.value.length - 1 ? ++order.value : 0
-
-  const response = await typeSlogan(messages.value[order.value], 0)
-
-  timer = 0
 
   window.requestAnimationFrame(() => {
     window.requestAnimationFrame(show.bind(null, timer))
-  })
-}
-
-function promise(char: string, time: number = 0.2): Promise<string> {
-  return new Promise((resolve) => {
-    setTimeout(resolve.bind(null, char), time * 1000)
-  })
-}
-
-async function* typeString(message: string) {
-  for (const char of message) {
-    yield await promise(char)
-  }
-}
-
-function typeSlogan(slogan: string, counter: number = 0): Promise<string> {
-  message.value = ''
-  return new Promise(async (resolve) => {
-    for await (const char of typeString(slogan)) {
-      message.value += char
-      if (message.value.length > 36) message.value = message.value.slice(1)
-    }
-    resolve(message.value)
   })
 }
 </script>
@@ -78,7 +55,8 @@ function typeSlogan(slogan: string, counter: number = 0): Promise<string> {
 <template>
   <div ref="running-string" class="running-string">
     <span class="language-switcher" @click="switchLang">{{ lang }}</span>
-    <span>{{ message }}</span>
+    <!-- <span>{{ message }}</span> -->
+    <span>{{ string }}</span>
   </div>
 </template>
 
@@ -86,16 +64,19 @@ function typeSlogan(slogan: string, counter: number = 0): Promise<string> {
 
 <style>
 .running-string {
-  z-index: 10;
+  /* z-index: 10;
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 42px;
-  background: var(--vt-c-green);
-  padding: 8px 0;
-  margin: 0 auto;
-  color: #eee;
+  width: 100vw; */
+  /* border-radius: 8px; */
+  /* height: 42px; */
+  /* background: var(--vt-c-green); */
+  /* padding: 8px; */
+  position: relative;
+  margin: 8px auto;
+  /* color: #eee; */
+  max-width: 320px;
   text-align: center;
   overflow: hidden;
   text-wrap: nowrap;
