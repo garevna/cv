@@ -15,14 +15,14 @@ const selected: Ref<'task-manager' | 'dgtek' | 'pineapple' | null> = ref(null)
     <div class="buttons-container">
       <PortfolioButtons v-model="selected" />
       <div class="github">
-        <a href="https://github.com/garevna">
+        <a href="https://github.com/garevna" target="_blank">
           <img src="@/assets/github.svg" alt="Github" width="36" height="36" />
           garevna
         </a>
       </div>
     </div>
     <div class="info-container">
-      <TaskManagerDescription v-if="selected === 'task-manager'" />
+      <TaskManagerDescription :isActive="selected === 'task-manager'" />
       <Portal :isActive="selected === 'dgtek'" />
       <Pineapple :isActive="selected === 'pineapple'" />
     </div>
@@ -30,6 +30,20 @@ const selected: Ref<'task-manager' | 'dgtek' | 'pineapple' | null> = ref(null)
 </template>
 
 <style sccs scoped>
+main {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas: 'buttons description';
+}
+
+.buttons-container {
+  grid-area: buttons;
+}
+
+.info-container {
+  grid-area: description;
+}
+
 .buttons-container,
 .info-container {
   align-self: start;
@@ -48,5 +62,19 @@ const selected: Ref<'task-manager' | 'dgtek' | 'pineapple' | null> = ref(null)
 .github a {
   text-decoration: none;
   color: #444;
+}
+
+@media (max-width: 600px) {
+  main {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    grid-template-areas:
+      'buttons'
+      'description';
+    justify-items: center;
+    row-gap: 48px;
+    justify-content: center;
+  }
 }
 </style>

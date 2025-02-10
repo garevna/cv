@@ -24,23 +24,18 @@ function clearAll() {
 <template>
   <div class="portfolio__container">
     <div class="portfolio-buttons">
-      <a
-        href="https://garevna.github.io/projects-and-tasks/"
-        class="scene"
-        data-social="Task manager"
-        target="_blank"
-      >
+      <a href="#" class="scene" data-social="Task manager">
         <div class="cube">
           <span class="icon icon-front normal-fone">
             <img
               src="@/assets/table-edit.svg"
               alt="Task manager"
-              width="64"
-              heigh="48"
-              class="task-manager"
+              width="44"
+              height="44"
+              class="task-manager-icon"
             />
           </span>
-          <LinkButton alt="JS lessons" @click="clickTaskManager" />
+          <PointerButton alt="Task manager" @click="clickTaskManager" />
         </div>
       </a>
 
@@ -144,7 +139,7 @@ function clearAll() {
   row-gap: 16px;
 }
 
-.task-manager {
+.task-manager-icon {
   vertical-align: middle;
 }
 

@@ -7,7 +7,7 @@ const props = defineProps({
 <template>
   <span class="icon icon-back">
     <img
-      src="../assets/button-pointer.svg"
+      src="@/assets/button-pointer.svg"
       width="24"
       height="24"
       :alt="alt"

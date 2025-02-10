@@ -1,10 +1,13 @@
 <script setup>
+import { ref } from 'vue'
 import { pineappleDescription } from '../configs/pineapple-description'
 import ExpandedText from './ExpandedText.vue'
-import { ref, reactive, useTemplateRef, onMounted, watch, inject } from 'vue'
 
 const props = defineProps({
-  isActive: Boolean,
+  isActive: {
+    type: Boolean,
+    default: false,
+  },
 })
 
 const sourceData = ref(pineappleDescription)
@@ -42,7 +45,7 @@ button.demo {
   border: none;
   background: transparent;
   font-family: Montserrat, monospace;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: bold;
   color: var(--vt-c-green);
   cursor: pointer;

@@ -5,6 +5,16 @@ body {
   font-family: Montserrat, 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
+#app {
+  max-width: 960px;
+  margin: 0 auto 36px;
+}
+
+nav {
+  text-align: center;
+  margin: 32px 0 48px;
+}
+
 nav > .link {
   color: #777;
   text-decoration: none;
@@ -26,7 +36,7 @@ nav > .router-link-exact-active {
 h1 {
   text-transform: uppercase;
   color: #075;
-  font-size: 24px;
+  font-size: 22px;
   text-align: center;
   margin: 24px 0;
 }
@@ -34,7 +44,7 @@ h1 {
 h2 {
   text-transform: uppercase;
   color: #097;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: bold;
   text-align: center;
   margin: 16px 0;

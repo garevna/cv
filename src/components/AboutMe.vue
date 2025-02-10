@@ -25,7 +25,7 @@ function clickWeaknessess() {
 <template>
   <div class="about">
     <img alt="garevna" class="logo" src="@/assets/garevna-2.jpg" width="160" height="260" />
-    <div>
+    <div class="description">
       <h2>IRINA FYLYPPOVA</h2>
       <h4>(garevna)</h4>
       <h4>
@@ -33,27 +33,35 @@ function clickWeaknessess() {
         10+ years of commercial experience.
       </h4>
     </div>
-  </div>
-  <div class="characteristics">
-    collaborative 🔸 open-minded 🔸 resourceful 🔸 detail-oriented 🔸 organized 🔸 efficient 🔸
-    curious 🔸 results-oriented
-  </div>
-  <hr />
-  <div class="strengths-weaknessess">
-    <h3 @click="clickStrengths">Strengths</h3>
-    <ExpandedText :isActive="activeStrengths" :text="strengths" role="" stack="" />
-    <h3 @click="clickWeaknessess">Weaknessess</h3>
-    <ExpandedText :isActive="activeWeaknessess" :text="weaknesses" role="" stack="" />
+    <div class="characteristics">
+      collaborative 🔸 open-minded 🔸 resourceful 🔸 detail-oriented 🔸 organized 🔸 efficient 🔸
+      curious 🔸 results-oriented
+    </div>
+    <div class="strengths-weaknessess">
+      <h3 @click="clickStrengths">Strengths</h3>
+      <ExpandedText :isActive="activeStrengths" :text="strengths" role="" stack="" />
+      <h3 @click="clickWeaknessess">Weaknessess</h3>
+      <ExpandedText :isActive="activeWeaknessess" :text="weaknesses" role="" stack="" />
+    </div>
   </div>
 </template>
 
 <style scoped>
 .about {
   display: grid;
-  grid-template-columns: max-content max-content;
-  margin-bottom: 16px;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto;
+  grid-template-areas:
+    'image description'
+    'characteristics characteristics'
+    'strengths strengths';
+  row-gap: 16px;
+}
+.description {
+  grid-area: 'description';
 }
 .about img {
+  grid-area: image;
   margin-right: 16px;
 }
 .about h2 {
@@ -67,6 +75,10 @@ function clickWeaknessess() {
 .about h4 {
   font-size: 0.9rem;
   color: var(--vt-c-black-soft);
+}
+
+.strengths-weaknessess {
+  grid-area: strengths;
 }
 
 .strengths-weaknessess * {
@@ -83,11 +95,29 @@ hr {
 }
 
 .characteristics {
+  grid-area: characteristics;
   font-size: 14px;
   color: #079;
 }
 
 @media (max-width: 600px) {
+  .about {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      'image'
+      'description'
+      'characteristics'
+      'strengths';
+    justify-items: center;
+  }
+  .characteristics {
+    padding: 0 12px;
+    text-align: justify;
+  }
+  .strengths-weaknessess > h3 {
+    padding: 0 12px;
+  }
   .about h2,
   .about h4 {
     text-align: center;

@@ -5,10 +5,14 @@ import { computed, inject, reactive, ref } from 'vue'
 
 const win = inject(injectionKeyForWin) as Reactive<{ width: number; height: number }>
 
-const rouletteSize = computed(() => (win.width > 430 ? 360 : win.width > 360 ? 320 : 260))
+const rouletteSize = computed(() =>
+  win.width > 900 ? 360 : win.width > 430 ? 320 : win.width > 360 ? 280 : 240,
+)
 const diameter = computed(() => rouletteSize.value + 'px')
 const offset = computed(() => rouletteSize.value / 2 + 'px')
-const imageSize = computed(() => (win.width > 430 ? 64 : win.width > 360 ? 48 : 40))
+const imageSize = computed(() =>
+  win.width > 900 ? 64 : win.width > 430 ? 52 : win.width > 360 ? 48 : 40,
+)
 const borderWidth = computed(() => imageSize.value + 4 + 'px')
 
 const startAngle = 45
@@ -112,6 +116,12 @@ function rotateWeel(event: MouseEvent): void {
 </template>
 
 <style scoped>
+main {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas: 'skills roulette';
+  column-gap: 16px;
+}
 .roulette-container {
   position: relative;
   right: 0;
@@ -166,7 +176,8 @@ function rotateWeel(event: MouseEvent): void {
 }
 
 .skills-container {
-  margin: 32px 0;
+  text-align: justify;
+  max-width: 100vw;
 }
 .skills-container > span {
   display: inline-block;
@@ -193,7 +204,15 @@ function rotateWeel(event: MouseEvent): void {
   background: var(--vt-c-green-alpha);
 }
 
-@media (max-width: 520px) {
+@media (max-width: 600px) {
+  main {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    grid-template-areas:
+      'skills'
+      'roulette';
+    row-gap: 36px;
+  }
   .skills-container {
     width: calc(100vw - 32px);
     text-align: center;

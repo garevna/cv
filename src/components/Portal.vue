@@ -1,10 +1,13 @@
 <script setup lang="ts">
+import { ref, useTemplateRef, watch } from 'vue'
 import { portalDescription } from '../configs/portal-description'
 import ExpandedText from './ExpandedText.vue'
-import { ref, reactive, useTemplateRef, watch, computed } from 'vue'
 
 const props = defineProps({
-  isActive: Boolean,
+  isActive: {
+    type: Boolean,
+    default: false,
+  },
 })
 
 let isReady = ref(false)
@@ -13,18 +16,10 @@ const sourceData = ref(portalDescription)
 
 const container = useTemplateRef('container-for-portal-description')
 
-const paddings = computed(() => (props.isActive ? '16px' : '0'))
-
-interface Bounds {
-  width: number
-}
-
-let bounds = reactive<Bounds>({ width: 320 })
-
 let frameWidth = ref(360)
 let frameHeight = ref(360 * 1.77777777777)
 
-watch(isReady, function (newVal) {
+watch(isReady, function () {
   if (container.value) {
     const bounds = container.value.getBoundingClientRect()
     frameWidth.value = bounds.width
@@ -35,9 +30,9 @@ watch(isReady, function (newVal) {
 
 <template>
   <div ref="container-for-portal-description" class="container">
-    <ExpandedText :isActive="isActive" :text="sourceData" v-model="isReady" />
+    <ExpandedText :isActive="props.isActive" :text="sourceData" v-model="isReady" />
   </div>
-  <div v-if="isActive && isReady" class="container youtube-player">
+  <div v-if="props.isActive && isReady" class="container youtube-player">
     <iframe
       :width="frameWidth"
       :height="frameHeight"
@@ -52,9 +47,9 @@ watch(isReady, function (newVal) {
 </template>
 
 <style scoped>
-.container {
+/* .container {
   padding: v-bind(paddings);
-}
+} */
 .youtube-player {
   justify-self: center;
 }
