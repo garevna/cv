@@ -24,7 +24,7 @@ function clickWeaknessess() {
 
 <template>
   <div class="about">
-    <img alt="garevna" class="logo" src="@/assets/garevna-2.jpg" width="160" height="260" />
+    <img alt="garevna" class="logo" src="@/assets/garevna-white.jpg" width="240" height="260" />
     <div class="description">
       <h2>IRINA FYLYPPOVA</h2>
       <h4>(garevna)</h4>

@@ -7,7 +7,7 @@ import TaskManagerDescription from '@/components/TaskManagerDescription.vue'
 import type { Ref } from 'vue'
 import { ref } from 'vue'
 
-const selected: Ref<'task-manager' | 'dgtek' | 'pineapple' | null> = ref(null)
+const selected: Ref<'roles-manager' | 'task-manager' | 'dgtek' | 'pineapple' | null> = ref(null)
 </script>
 
 <template>

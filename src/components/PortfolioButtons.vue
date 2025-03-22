@@ -5,6 +5,10 @@ import PointerButton from '@/components/PointerButton.vue'
 
 const model = defineModel()
 
+function clickRolesManager(): void {
+  model.value = 'roles-manager'
+}
+
 function clickTaskManager(): void {
   model.value = 'task-manager'
 }
@@ -24,6 +28,26 @@ function clearAll() {
 <template>
   <div class="portfolio__container">
     <div class="portfolio-buttons">
+      <a
+        href="https://garevna.github.io/roles-manager/"
+        class="scene"
+        data-social="Roles manager"
+        target="_blank"
+      >
+        <div class="cube">
+          <span class="icon icon-front normal-fone">
+            <img
+              src="@/assets/icon-ierarchy.svg"
+              alt="Roles manager"
+              width="44"
+              height="44"
+              class="task-manager-icon"
+            />
+          </span>
+          <PointerButton alt="Roles manager" @click="clickRolesManager" />
+        </div>
+      </a>
+
       <a href="#" class="scene" data-social="Task manager">
         <div class="cube">
           <span class="icon icon-front normal-fone">
