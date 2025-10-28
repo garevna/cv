@@ -5,6 +5,22 @@ import PointerButton from '@/components/PointerButton.vue'
 
 const model = defineModel()
 
+function clickVdExpress(): void {
+  model.value = 'vd-express'
+}
+
+function clickIsPortal(): void {
+  model.value = 'is-portal'
+}
+
+function clickBusPortal(): void {
+  model.value = 'bus-portal'
+}
+
+function clickItnet(): void {
+  model.value = 'itnet'
+}
+
 function clickRolesManager(): void {
   model.value = 'roles-manager'
 }
@@ -28,6 +44,86 @@ function clearAll() {
 <template>
   <div class="portfolio__container">
     <div class="portfolio-buttons">
+      <a
+        href="https://dev.vdexpress.isportal.app/"
+        class="scene"
+        data-social="VD EXPRESS"
+        target="_blank"
+      >
+        <div class="cube">
+          <span class="icon icon-front normal-fone">
+            <img
+              src="@/assets/vd-express-logo.svg"
+              alt="VD EXPRESS"
+              width="56"
+              height="56"
+              class="task-manager-icon"
+            />
+          </span>
+          <PointerButton alt="VD EXPRESS" @click="clickVdExpress" />
+        </div>
+      </a>
+
+      <a
+        href="https://isportal.app/"
+        class="scene"
+        data-social="IS PORTAL"
+        target="_blank"
+      >
+        <div class="cube">
+          <span class="icon icon-front normal-fone">
+            <img
+              src="@/assets/is-portal-logo.svg"
+              alt="IS PORTAL"
+              width="56"
+              height="56"
+              class="task-manager-icon"
+            />
+          </span>
+          <PointerButton alt="IS PORTAL" @click="clickIsPortal" />
+        </div>
+      </a>
+
+      <a
+        href="https://www.busportal.app/"
+        class="scene"
+        data-social="BUS PORTAL"
+        target="_blank"
+      >
+        <div class="cube">
+          <span class="icon icon-front normal-fone">
+            <img
+              src="@/assets/bus-portal-logo.svg"
+              alt="BUS PORTAL"
+              width="56"
+              height="56"
+              class="task-manager-icon"
+            />
+          </span>
+          <PointerButton alt="BUS PORTAL" @click="clickBusPortal" />
+        </div>
+      </a>
+
+      <a
+        href="https://itnet.lviv.ua/"
+        class="scene"
+        data-social="ITNET"
+        target="_blank"
+      >
+        <div class="cube">
+          <span class="icon icon-front normal-fone">
+            <img
+              src="@/assets/it-net-logo.svg"
+              alt="ITNET"
+              width="52"
+              height="52"
+              class="task-manager-icon"
+            />
+          </span>
+          <PointerButton alt="ITNET" @click="clickItnet" />
+        </div>
+      </a>
+
       <a
         href="https://garevna.github.io/roles-manager/"
         class="scene"
