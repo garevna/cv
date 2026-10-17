@@ -25,7 +25,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          node-version-file: .node-version
           cache: yarn
 
       - name: Install
@@ -35,9 +35,7 @@ jobs:
         run: yarn type-check
 
       # --no-fix so a lint error fails the build instead of being quietly
-      # rewritten. One rule is switched off in eslint.config.js because it
-      # cannot load under ESLint 9.15; the comment there says what to restore
-      # once Node is new enough for typescript-eslint >= 8.15.
+      # rewritten.
       - name: Lint
         run: yarn lint --no-fix
 

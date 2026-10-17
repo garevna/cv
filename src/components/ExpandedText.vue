@@ -60,8 +60,12 @@ onMounted(() => {
   }
 })
 
-watch(props, async (newVal) => {
-  newVal.isActive ? show() : await hide()
+watch(props, (newVal) => {
+  // Was a ternary used as a statement, with `await` on one branch only. The
+  // await did nothing: hide() returns a promise that is already resolved, and
+  // the hiding itself happens in setTimeout. show() is synchronous.
+  if (newVal.isActive) show()
+  else hide()
 })
 </script>
 
