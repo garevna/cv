@@ -31,7 +31,7 @@ function switchLang(): void {
   lang.value = lang.value === 'eng' ? 'ua' : lang.value === 'ua' ? 'ru' : 'eng'
 }
 
-async function show(timer: number): Promise<any> {
+async function show(timer: number): Promise<void> {
   // if (timer++ < 10) {
   //   window.requestAnimationFrame(() => {
   //     window.requestAnimationFrame(show.bind(null, timer))
@@ -59,8 +59,6 @@ async function show(timer: number): Promise<any> {
     <span>{{ string }}</span>
   </div>
 </template>
-
-<script></script>
 
 <style>
 .running-string {

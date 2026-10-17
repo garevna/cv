@@ -34,22 +34,15 @@ jobs:
       - name: Types
         run: yarn type-check
 
+      # --no-fix so a lint error fails the build instead of being quietly
+      # rewritten. One rule is switched off in eslint.config.js because it
+      # cannot load under ESLint 9.15; the comment there says what to restore
+      # once Node is new enough for typescript-eslint >= 8.15.
+      - name: Lint
+        run: yarn lint --no-fix
+
       - name: Unit tests
         run: yarn test:unit --run
-
-      # Lint is deliberately not a gate yet. `npm run lint` is broken in this
-      # repository and has been for a while: typescript-eslint 8.14 cannot load
-      # @typescript-eslint/no-unused-expressions under ESLint 9.15 — it reads
-      # an options object the newer ESLint no longer passes, and every file
-      # fails with a stack trace rather than a lint error.
-      #
-      # The fix is typescript-eslint >= 8.15, which pulls eslint-visitor-keys 5
-      # and so needs Node >= 22.13. Worth doing, but it is a Node upgrade and
-      # not something to slip into a deploy workflow. Put this back as a gate
-      # once that is done:
-      #
-      #   - name: Lint
-      #     run: yarn lint --no-fix
 
       # --base=/cv/ matches where GitHub Pages serves this repository from.
       - name: Build

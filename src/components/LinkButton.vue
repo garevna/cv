@@ -3,9 +3,10 @@ const props = defineProps({
   alt: String,
   callback: {
     type: Function,
-    default: (_event: MouseEvent) => {
-      console.log(_event)
-    },
+    // A no-op, not a logger. Nothing here needs a default behaviour, and
+    // the console.log this replaced fired on every click of every link
+    // tile in the portfolio.
+    default: () => {},
   },
 })
 
