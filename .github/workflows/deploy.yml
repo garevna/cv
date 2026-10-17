@@ -1,0 +1,92 @@
+name: build and deploy
+
+# The site used to be published by hand: npm run build, then
+#   git subtree push --prefix dist origin gh-pages
+# which meant dist had to be committed and the deploy only happened when
+# somebody remembered. The branch stays exactly the same — gh-pages, so the
+# repository's Pages setting needs no change — it is just built here now.
+
+# Both, because this repository has source on master and on main — master is
+# the one that moves — while gh-pages holds the built site. Mind that: the
+# local working branch is also called gh-pages and contains source, so a plain
+# `git push origin gh-pages` from a checkout would replace the live site with
+# the source tree.
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: yarn
+
+      - name: Install
+        run: yarn install --frozen-lockfile
+
+      - name: Types
+        run: yarn type-check
+
+      - name: Unit tests
+        run: yarn test:unit --run
+
+      # Lint is deliberately not a gate yet. `npm run lint` is broken in this
+      # repository and has been for a while: typescript-eslint 8.14 cannot load
+      # @typescript-eslint/no-unused-expressions under ESLint 9.15 — it reads
+      # an options object the newer ESLint no longer passes, and every file
+      # fails with a stack trace rather than a lint error.
+      #
+      # The fix is typescript-eslint >= 8.15, which pulls eslint-visitor-keys 5
+      # and so needs Node >= 22.13. Worth doing, but it is a Node upgrade and
+      # not something to slip into a deploy workflow. Put this back as a gate
+      # once that is done:
+      #
+      #   - name: Lint
+      #     run: yarn lint --no-fix
+
+      # --base=/cv/ matches where GitHub Pages serves this repository from.
+      - name: Build
+        run: yarn build-only
+
+      - name: Upload the build
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist
+          retention-days: 7
+
+  deploy:
+    # A pull request is checked by the job above and published by nothing.
+    if: github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist
+
+      # Plain git rather than a third-party action: this pushes one branch of
+      # static files and there is nothing here worth trusting someone else's
+      # code with.
+      - name: Publish to gh-pages
+        run: |
+          cd dist
+          touch .nojekyll
+          git init -q
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -q -m "Build from ${GITHUB_SHA::7}"
+          git push -q --force "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git" HEAD:gh-pages

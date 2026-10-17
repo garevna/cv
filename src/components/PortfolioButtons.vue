@@ -3,41 +3,33 @@ import GlitchLogo from '@/components/GlitchLogo.vue'
 import LinkButton from '@/components/LinkButton.vue'
 import PointerButton from '@/components/PointerButton.vue'
 
+import { portfolioProjects, type PortfolioProject } from '@/configs/portfolio-projects'
+
 const model = defineModel()
 
-function clickVdExpress(): void {
-  model.value = 'vd-express'
+/**
+ * Vite rewrites `src="@/assets/x.svg"` at build time, which only works when the
+ * path is written out in the template. A tile's logo comes from data, so the
+ * assets are collected here instead and looked up by file name — the same
+ * hashing and inlining, resolved at build time either way.
+ */
+const logos = import.meta.glob('@/assets/*', { eager: true, import: 'default' }) as Record<
+  string,
+  string
+>
+
+function logoUrl(file: string): string {
+  const match = Object.keys(logos).find((path) => path.endsWith('/' + file))
+  return match ? logos[match] : ''
 }
 
-function clickIsPortal(): void {
-  model.value = 'is-portal'
-}
-
-function clickBusPortal(): void {
-  model.value = 'bus-portal'
-}
-
-function clickItnet(): void {
-  model.value = 'itnet'
-}
-
-function clickRolesManager(): void {
-  model.value = 'roles-manager'
-}
-
-function clickTaskManager(): void {
-  model.value = 'task-manager'
-}
-
-function clickDGtek(): void {
-  model.value = 'dgtek'
-}
-function clickPineapple() {
-  model.value = 'pineapple'
-}
-
-function clearAll() {
-  model.value = null
+/**
+ * A tile either opens a description or is nothing but a link out. The ones
+ * without a description clear the selection, so pressing a plain link closes
+ * whatever was open rather than leaving it under an unrelated project.
+ */
+function select(project: PortfolioProject): void {
+  model.value = project.selects ?? null
 }
 </script>
 
@@ -45,198 +37,34 @@ function clearAll() {
   <div class="portfolio__container">
     <div class="portfolio-buttons">
       <a
-        href="https://dev.vdexpress.isportal.app/"
+        v-for="project in portfolioProjects"
+        :key="project.label"
+        :href="project.href"
         class="scene"
-        data-social="VD EXPRESS"
-        target="_blank"
+        :data-social="project.label"
+        :target="project.href === '#' ? undefined : '_blank'"
       >
         <div class="cube">
-          <span class="icon icon-front normal-fone">
+          <span class="icon icon-front" :class="project.fone">
+            <GlitchLogo
+              v-if="project.logo === 'glitch'"
+              :style="{ width: project.width + 'px', height: project.height + 'px' }"
+            />
             <img
-              src="@/assets/vd-express-logo.svg"
-              alt="VD EXPRESS"
-              width="56"
-              height="56"
-              class="task-manager-icon"
+              v-else
+              :src="logoUrl(project.logo)"
+              :alt="project.alt ?? project.label"
+              :width="project.width"
+              :height="project.height"
+              :class="project.imageClass"
             />
           </span>
-          <PointerButton alt="VD EXPRESS" @click="clickVdExpress" />
-        </div>
-      </a>
-
-      <a
-        href="https://isportal.app/"
-        class="scene"
-        data-social="IS PORTAL"
-        target="_blank"
-      >
-        <div class="cube">
-          <span class="icon icon-front normal-fone">
-            <img
-              src="@/assets/is-portal-logo.svg"
-              alt="IS PORTAL"
-              width="56"
-              height="56"
-              class="task-manager-icon"
-            />
-          </span>
-          <PointerButton alt="IS PORTAL" @click="clickIsPortal" />
-        </div>
-      </a>
-
-      <a
-        href="https://www.busportal.app/"
-        class="scene"
-        data-social="BUS PORTAL"
-        target="_blank"
-      >
-        <div class="cube">
-          <span class="icon icon-front normal-fone">
-            <img
-              src="@/assets/bus-portal-logo.svg"
-              alt="BUS PORTAL"
-              width="56"
-              height="56"
-              class="task-manager-icon"
-            />
-          </span>
-          <PointerButton alt="BUS PORTAL" @click="clickBusPortal" />
-        </div>
-      </a>
-
-      <a
-        href="https://itnet.lviv.ua/"
-        class="scene"
-        data-social="ITNET"
-        target="_blank"
-      >
-        <div class="cube">
-          <span class="icon icon-front normal-fone">
-            <img
-              src="@/assets/it-net-logo.svg"
-              alt="ITNET"
-              width="52"
-              height="52"
-              class="task-manager-icon"
-            />
-          </span>
-          <PointerButton alt="ITNET" @click="clickItnet" />
-        </div>
-      </a>
-
-      <a
-        href="https://garevna.github.io/roles-manager/"
-        class="scene"
-        data-social="Roles manager"
-        target="_blank"
-      >
-        <div class="cube">
-          <span class="icon icon-front normal-fone">
-            <img
-              src="@/assets/icon-ierarchy.svg"
-              alt="Roles manager"
-              width="44"
-              height="44"
-              class="task-manager-icon"
-            />
-          </span>
-          <PointerButton alt="Roles manager" @click="clickRolesManager" />
-        </div>
-      </a>
-
-      <a href="#" class="scene" data-social="Task manager">
-        <div class="cube">
-          <span class="icon icon-front normal-fone">
-            <img
-              src="@/assets/table-edit.svg"
-              alt="Task manager"
-              width="44"
-              height="44"
-              class="task-manager-icon"
-            />
-          </span>
-          <PointerButton alt="Task manager" @click="clickTaskManager" />
-        </div>
-      </a>
-
-      <a href="#" class="scene" data-social="DGtek portal">
-        <div class="cube">
-          <span class="icon icon-front normal-fone">
-            <img
-              src="@/assets/dgtek.png"
-              alt="DGtek logo"
-              width="64"
-              heigh="48"
-              class="dgtek-icon"
-            />
-          </span>
-          <PointerButton alt="DGtek portal" @click="clickDGtek" />
-        </div>
-      </a>
-
-      <a href="#" class="scene" data-social="Pineapple CMS">
-        <div class="cube">
-          <span class="icon icon-front black-fone">
-            <img
-              src="@/assets/pineapple.png"
-              alt="Pineapple logo"
-              width="44"
-              height="44"
-              class="pineapple-icon"
-            />
-          </span>
-          <PointerButton alt="Pineapple CMS" @click="clickPineapple" />
-        </div>
-      </a>
-
-      <a
-        href="https://garevna.github.io/js-lessons/"
-        class="scene"
-        data-social="JS-lessons"
-        target="_blank"
-      >
-        <div class="cube">
-          <span class="icon icon-front">
-            <GlitchLogo style="width: 70px; height: 70px" />
-          </span>
-          <LinkButton alt="JS lessons" @click="clearAll" />
-        </div>
-      </a>
-
-      <a
-        href="https://garevna.github.io/js-quiz/"
-        class="scene"
-        data-social="JS-quiz"
-        target="_blank"
-      >
-        <div class="cube">
-          <span class="icon icon-front black-fone">
-            <img src="@/assets/js-icon.svg" width="48" height="48" alt="js-quiz" class="quiz" />
-          </span>
-          <LinkButton alt="JS quiz" @click="clearAll" />
-        </div>
-      </a>
-
-      <a
-        href="https://garevna.github.io/comics/"
-        class="scene"
-        data-social="comics"
-        target="_blank"
-      >
-        <div class="cube">
-          <span class="icon icon-front black-fone">
-            <img src="@/assets/comics-2.png" width="70" height="70" alt="js-quiz" class="comics" />
-          </span>
-          <LinkButton alt="Comics" @click="clearAll" />
-        </div>
-      </a>
-
-      <a href="https://www.npmjs.com/~garevna" class="scene" data-social="npm" target="_blank">
-        <div class="cube">
-          <span class="icon icon-front black-fone">
-            <img src="@/assets/npm.svg" width="64" height="64" alt="js-quiz" class="npm" />
-          </span>
-          <LinkButton alt="npm registry" @click="clearAll" />
+          <PointerButton
+            v-if="project.selects"
+            :alt="project.buttonLabel ?? project.label"
+            @click="select(project)"
+          />
+          <LinkButton v-else :alt="project.buttonLabel ?? project.label" @click="select(project)" />
         </div>
       </a>
     </div>

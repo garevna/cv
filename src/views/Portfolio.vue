@@ -1,13 +1,22 @@
 <script setup lang="ts">
-import Pineapple from '@/components/Pineapple.vue'
-import Portal from '@/components/Portal.vue'
 import PortfolioButtons from '@/components/PortfolioButtons.vue'
+import ProjectDescription from '@/components/ProjectDescription.vue'
 import TaskManagerDescription from '@/components/TaskManagerDescription.vue'
+
+import { portfolioProjects } from '@/configs/portfolio-projects'
 
 import type { Ref } from 'vue'
 import { ref } from 'vue'
 
-const selected: Ref<'roles-manager' | 'task-manager' | 'dgtek' | 'pineapple' | null> = ref(null)
+const selected: Ref<string | null> = ref(null)
+
+/**
+ * Every project that opens something — so a tile with a button always has a
+ * description behind it. The page used to render three descriptions against
+ * eight buttons, which left VD EXPRESS, IS PORTAL, BUS PORTAL, ITNET and Roles
+ * manager doing nothing at all when pressed.
+ */
+const described = portfolioProjects.filter((project) => project.selects)
 </script>
 
 <template>
@@ -22,14 +31,18 @@ const selected: Ref<'roles-manager' | 'task-manager' | 'dgtek' | 'pineapple' | n
       </div>
     </div>
     <div class="info-container">
-      <TaskManagerDescription :isActive="selected === 'task-manager'" />
-      <Portal :isActive="selected === 'dgtek'" />
-      <Pineapple :isActive="selected === 'pineapple'" />
+      <template v-for="project in described" :key="project.label">
+        <TaskManagerDescription
+          v-if="project.component === 'task-manager'"
+          :isActive="selected === project.selects"
+        />
+        <ProjectDescription v-else :project="project" :isActive="selected === project.selects" />
+      </template>
     </div>
   </main>
 </template>
 
-<style sccs scoped>
+<style scoped>
 main {
   display: grid;
   grid-template-columns: 1fr 1fr;
