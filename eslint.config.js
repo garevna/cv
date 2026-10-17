@@ -62,13 +62,20 @@ export default [
       // typescript-eslint 8.14 builds this rule on ESLint's own
       // no-unused-expressions and reads an options object that ESLint 9.15 no
       // longer passes. It throws while loading, so every file comes back as a
-      // stack trace instead of a lint result — `npm run lint` has been
-      // reporting nothing at all.
+      // stack trace instead of a lint result.
       //
-      // The real fix is typescript-eslint >= 8.15, which pulls
-      // eslint-visitor-keys 5 and therefore wants Node >= 22.13. After that
-      // upgrade, delete this block and restore the lint step as a gate in
-      // .github/workflows/deploy.yml.
+      // Turning it back on is a coordinated upgrade, not a version bump, and
+      // it was tried: typescript-eslint 8.71 fixes the rule but drops the
+      // subpath @vue/eslint-config-typescript@14 imports
+      // (./use-at-your-own-risk/eslint-recommended-raw), so that config has to
+      // move too — and the newer tree wants Node >= 22.13 while this machine
+      // runs 22.11. Do all three together:
+      //
+      //   Node >= 22.13 (bible already pins 24.21.0 in .node-version)
+      //   @vue/eslint-config-typescript to a release built for plugin 8.7x
+      //   typescript-eslint and @typescript-eslint/* to match
+      //
+      // then delete this block.
       '@typescript-eslint/no-unused-expressions': 'off',
     },
   },
