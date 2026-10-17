@@ -1,0 +1,1 @@
+import{_ as e}from"./recomendation-CywO-sAX.js";import{_ as o,b as t,o as c}from"./index-CwKOh_Os.js";const s={},_={src:e,width:"100%"};function r(a,n){return c(),t("img",_)}const m=o(s,[["render",r],["__scopeId","data-v-2cf2b80e"]]);export{m as default};
