@@ -143,9 +143,13 @@ My part was the interface, the responsive layout and the client-side logic; Dock
   {
     label: 'Pagewright',
     href: 'https://pagewright.pp.ua/',
-    logo: 'pagewright.png',
+    // The project's own character, taken as the drawing rather than as the
+    // favicon: vector, a third of the weight, and the only one of the
+    // eighteen poses that still reads at tile size. 38x56 keeps its shape -
+    // the drawing is portrait (1394x2048), and a square would squash it.
+    logo: 'pagewright.svg',
     alt: 'Pagewright logo',
-    width: 56,
+    width: 38,
     height: 56,
     imageClass: 'task-manager-icon',
     fone: 'black-fone',
