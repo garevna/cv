@@ -141,6 +141,58 @@ Three languages, interactive cards, separate desktop and mobile navigation flows
 My part was the interface, the responsive layout and the client-side logic; Docker and CI were set up by colleagues.`,
   },
   {
+    label: 'Pagewright',
+    href: 'https://pagewright.pp.ua/',
+    logo: 'pagewright.png',
+    alt: 'Pagewright logo',
+    width: 56,
+    height: 56,
+    imageClass: 'task-manager-icon',
+    fone: 'black-fone',
+    selects: 'pagewright',
+    role: 'Full-stack developer | my own product',
+    stack:
+      'Nuxt 4 • Vue 3 • TypeScript • Vuetify 3 • Pinia • vue-i18n • h3 • unstorage • IndexedDB • Service Worker • Firebase Auth • Firestore • Cloudflare Workers (KV, R2, D1) • Telegram Bot API • pnpm workspaces',
+    description: `A visual editor for multilingual sites, and the sites it builds. My own product, licensed commercially rather than open source — about 76,000 lines, the largest thing I have written.
+
+Pages are assembled from ready-made blocks, edited where they stand and published without touching code. The published site is a second application: none of the editor's styles, plugins or settings can reach it, so a client's site can be deployed with no editor at all. The same build runs on Cloudflare Workers over KV and R2 or on any Node host over a single folder — the deployment chooses its storage when it starts, not when it is built.
+
+A client's own API is connected by configuration rather than code. Forms know only their own field keys; where each value goes — address, parameter name, format — is a setting, so a new client changes settings and not code. The demo is wired to a made-up hotel chain that lives outside the site as its own service, with its own booking page and admin panel: cities, the nights that are free, rooms priced for the dates chosen, the handoff, and the booking landing in that chain's admin seconds later.
+
+Roles are enforced by the server, not only by the interface. The same lists that hide the buttons refuse the writes behind them, per path, and the owners are a setting of the deployment rather than a row in a table — which is what makes handing a client's own person the supervisor seat safe.
+
+Visitors sign in, and the owner answers from Telegram: a message from a form arrives in a private group, and the reply typed there appears in the visitor's account on the site. The owner never opens an admin panel, because an admin panel is where small-business enquiries go unanswered.`,
+    demo: { href: 'https://pagewright.pp.ua/site/', label: 'Open the site it built' },
+  },
+  {
+    label: 'Bible',
+    // Deliberately description-first, unlike the tiles that link straight
+    // out: the address shows only the reader, and the half worth reading
+    // about is behind the sign-in. The button under the text opens it for
+    // anyone who wants to look after knowing what they are looking at.
+    href: '#',
+    logo: 'bible.png',
+    alt: 'Bible app logo',
+    width: 48,
+    height: 48,
+    imageClass: 'task-manager-icon',
+    fone: 'normal-fone',
+    selects: 'bible',
+    role: 'Full-stack developer | my own product',
+    stack:
+      'Vue 3 • TypeScript • Pinia • Vuetify 3 • Vite • PWA • Cloudflare Workers / D1 / KV / Cron • Firebase Auth • Firestore • Telegram Bot API • MapLibre GL • Playwright • Vitest',
+    description: `A Bible reader anyone can open, and — behind the sign-in — the tool a church runs its ministries on. What the link shows is the front of it: seven translations, search, keywords and notes of your own. The half that took the work is the half a visitor never sees.
+
+Behind it is a serverless back end of my own. A Cloudflare Worker verifies the caller's Firebase token and decides authorisation itself: roles and ministries in KV, messages, events, participants and materials in D1 behind ten versioned SQL migrations, a nightly cron and a CORS allowlist, with the bot tokens as worker secrets. Around 10,000 lines of Worker TypeScript, with tests beside them.
+
+The rota is the part with real operational logic: recurring events with a different time on different weekdays and edits to a single day, two kinds of invitation, stand-ins who agree in advance and step in automatically, and escalation to the leaders when both decline.
+
+Two Telegram bots: one posts the week's theme to the church channel, the other writes to ministers privately with buttons whose effect is identical to acting inside the app.
+
+Permissions designed against lock-out: reader, publisher, administrator, plus owners the admin page cannot modify — so no administrator can remove the last one, including themselves. Started alone in 2023 as a reader; it is also the codebase where I work with an AI agent most closely, and the one I would show to explain how I work today.`,
+    demo: { href: 'https://kcc-bible.pp.ua/', label: 'Open the reading app' },
+  },
+  {
     label: 'Roles manager',
     href: 'https://garevna.github.io/roles-manager/',
     logo: 'icon-ierarchy.svg',
