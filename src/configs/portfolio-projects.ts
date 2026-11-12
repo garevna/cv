@@ -143,13 +143,15 @@ My part was the interface, the responsive layout and the client-side logic; Dock
   {
     label: 'Pagewright',
     href: 'https://pagewright.pp.ua/',
-    // The project's own character, taken as the drawing rather than as the
-    // favicon: vector, a third of the weight, and the only one of the
-    // eighteen poses that still reads at tile size. 38x56 keeps its shape -
-    // the drawing is portrait (1394x2048), and a square would squash it.
+    // The project's own character (site-editor-demo/personage), pressing the
+    // kind of panel the editor is made of - and reframed for this tile
+    // rather than redrawn: the drawings are tall and carry
+    // preserveAspectRatio="none", so in a square box they either squash or
+    // leave the character a sliver. This copy keeps every path and changes
+    // only the window onto them - a square viewBox around the ink.
     logo: 'pagewright.svg',
     alt: 'Pagewright logo',
-    width: 38,
+    width: 56,
     height: 56,
     imageClass: 'task-manager-icon',
     fone: 'black-fone',
